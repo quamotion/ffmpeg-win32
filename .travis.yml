@@ -1,0 +1,6 @@
+install:
+- ./install.sh
+- ./download.sh
+
+build:
+- ./build.sh
