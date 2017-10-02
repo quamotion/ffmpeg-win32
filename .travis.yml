@@ -7,5 +7,5 @@ addons:
 install:
 - ./download.sh
 
-build:
+script:
 - ./build.sh
