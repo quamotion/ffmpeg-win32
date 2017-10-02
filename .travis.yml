@@ -3,6 +3,7 @@ addons:
     packages:
     - gcc-mingw-w64-x86-64
     - g++-mingw-w64-x86-64
+    - yasm
 
 install:
 - ./download.sh
