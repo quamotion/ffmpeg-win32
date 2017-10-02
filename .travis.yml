@@ -6,7 +6,14 @@ addons:
     - yasm
 
 install:
+- pip install --user azure-cli
 - ./download.sh
+- ./install-dotnet.sh
 
 script:
 - ./build.sh
+- ./package.sh
+
+after_success:
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then az=$HOME/.local/bin/az; fi
+- $az storage blob upload -f FFmpeg.Native/bin/Release/FFmpeg.Native.1.0.0-r$TRAVIS_BUILD_NUMBER.nupkg -c ffmpeg -n FFmpeg.Native.1.0.0-r$TRAVIS_BUILD_NUMBER.nupkg
