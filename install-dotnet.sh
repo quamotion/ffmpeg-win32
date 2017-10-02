@@ -1,6 +1,3 @@
-curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
-sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
-sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-trusty-prod trusty main" > /etc/apt/sources.list.d/dotnetdev.list'
-sudo apt-get update
-sudo apt-get install dotnet-sdk-2.0.0
-/usr/local/bin/dotnet --version
+wget -nv -nc https://download.microsoft.com/download/1/B/4/1B4DE605-8378-47A5-B01B-2C79D6C55519/dotnet-sdk-2.0.0-linux-x64.tar.gz -O ~/dotnet-sdk-2.0.0-linux-x64.tar.gz
+mkdir -p ~/dotnet
+tar xvzf ~/dotnet-sdk-2.0.0-linux-x64.tar.gz ~/dotnet
