@@ -4,6 +4,7 @@ addons:
     - gcc-mingw-w64-x86-64
     - g++-mingw-w64-x86-64
     - yasm
+    - libunwind8
 
 install:
 - pip install --user azure-cli
