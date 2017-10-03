@@ -17,4 +17,4 @@ script:
 
 after_success:
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then az=$HOME/.local/bin/az; fi
-- $az storage blob upload -f FFmpeg.Native/bin/Release/FFmpeg.Native.1.0.0-r$TRAVIS_BUILD_NUMBER.nupkg -c ffmpeg -n FFmpeg.Native.1.0.0-r$TRAVIS_BUILD_NUMBER.nupkg
+- $az storage blob upload -f FFmpeg.Native.H264/bin/Release/FFmpeg.Native.H264.1.0.0-r$TRAVIS_BUILD_NUMBER.nupkg -c ffmpeg -n FFmpeg.Native.H264.1.0.0-r$TRAVIS_BUILD_NUMBER.nupkg
