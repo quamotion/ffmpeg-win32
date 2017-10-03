@@ -33,7 +33,7 @@
     <Content Include="$(FFmpegDir)\libavutil\avutil-55.dll">
       <PackagePath>runtimes/win7-x64/native/</PackagePath>
     </Content>
-    <Content Include="$(FFmpegDir)\libswsresample\swsresample-2.dll">
+    <Content Include="$(FFmpegDir)\libswresample\swresample-2.dll">
       <PackagePath>runtimes/win7-x64/native/</PackagePath>
     </Content>
     <Content Include="$(FFmpegDir)\libswscale\swscale-4.dll">
