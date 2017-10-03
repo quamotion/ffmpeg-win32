@@ -3,6 +3,18 @@
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>
     <FFmpegDir>$(MSBuildThisFileDirectory)\..\ffmpeg-3.3.4\</FFmpegDir>
+    <PackageIconUrl>https://ffmpeg.org/favicon.ico</PackageIconUrl>
+    <Authors>FFmpeg Team</Authors>
+    <Company></Company>
+    <Description>Contains the native binaries of a LGPL build FFmpeg which only includes the H264 decoder.</Description>
+    <Copyright>FFmpeg Team</Copyright>
+    <PackageLicenseUrl>https://github.com/qmfrederik/ffmpeg-win32/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/qmfrederik/ffmpeg-win32/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/qmfrederik/ffmpeg-win32/</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>ffmpeg native h264</PackageTags>
+    <AssemblyVersion>3.3.4.0</AssemblyVersion>
+    <FileVersion>3.3.4.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
