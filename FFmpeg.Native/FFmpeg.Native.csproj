@@ -3,35 +3,47 @@
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>
     <FFmpegDir>$(MSBuildThisFileDirectory)\..\ffmpeg-3.3.4\</FFmpegDir>
+    <PackageIconUrl>https://ffmpeg.org/favicon.ico</PackageIconUrl>
+    <Authors>FFmpeg Team</Authors>
+    <Company></Company>
+    <Description>Contains the native binaries of a LGPL build of FFmpeg.</Description>
+    <Copyright>FFmpeg Team</Copyright>
+    <PackageLicenseUrl>https://github.com/qmfrederik/ffmpeg-win32/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/qmfrederik/ffmpeg-win32/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/qmfrederik/ffmpeg-win32/</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>ffmpeg native</PackageTags>
+    <AssemblyVersion>3.3.4.0</AssemblyVersion>
+    <FileVersion>3.3.4.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <Content Include="$(FFmpegDir)\libavcodec\avcodec-57.dll">
-      <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extenion)</PackagePath>
+      <PackagePath>runtimes/win7-x64/native/</PackagePath>
     </Content>
     <Content Include="$(FFmpegDir)\libavdevice\avdevice-57.dll">
-      <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extenion)</PackagePath>
+      <PackagePath>runtimes/win7-x64/native/</PackagePath>
     </Content>
     <Content Include="$(FFmpegDir)\libavfilter\avfilter-6.dll">
-      <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extenion)</PackagePath>
+      <PackagePath>runtimes/win7-x64/native/</PackagePath>
     </Content>
     <Content Include="$(FFmpegDir)\libavformat\avformat-57.dll">
-      <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extenion)</PackagePath>
+      <PackagePath>runtimes/win7-x64/native/</PackagePath>
     </Content>
     <Content Include="$(FFmpegDir)\libavutil\avutil-55.dll">
-      <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extenion)</PackagePath>
+      <PackagePath>runtimes/win7-x64/native/</PackagePath>
     </Content>
     <Content Include="$(FFmpegDir)\libswsresample\swsresample-2.dll">
-      <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extenion)</PackagePath>
+      <PackagePath>runtimes/win7-x64/native/</PackagePath>
     </Content>
     <Content Include="$(FFmpegDir)\libswscale\swscale-4.dll">
-      <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extenion)</PackagePath>
+      <PackagePath>runtimes/win7-x64/native/</PackagePath>
     </Content>
     <Content Include="$(FFmpegDir)\ffmpeg.exe">
-      <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extenion)</PackagePath>
+      <PackagePath>runtimes/win7-x64/native/</PackagePath>
     </Content>
     <Content Include="$(FFmpegDir)\ffprobe.exe">
-      <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extenion)</PackagePath>
+      <PackagePath>runtimes/win7-x64/native/</PackagePath>
     </Content>
   </ItemGroup>
 
