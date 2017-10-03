@@ -1,6 +1,7 @@
-FFmpeg.Native/
 *.tar.gz2
 *.tar.gz
 ffmpeg-*
 dotnet/
-
+bin/
+obj/
+.vs/
