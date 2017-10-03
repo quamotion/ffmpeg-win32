@@ -30,6 +30,9 @@
     <Content Include="$(FFmpegDir)\libswscale\swscale-4.dll">
       <PackagePath>runtimes/win7-x64/native/</PackagePath>
     </Content>
+    <Content Include="/usr/x86_64-w64-mingw32/lib/libwinpthread-1.dll">
+      <PackagePath>runtimes/win7-x64/native/</PackagePath>
+    </Content>
   </ItemGroup>
 
 </Project>
