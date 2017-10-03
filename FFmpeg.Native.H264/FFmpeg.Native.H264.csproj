@@ -19,16 +19,16 @@
 
   <ItemGroup>
     <Content Include="$(FFmpegDir)\libavcodec\avcodec-57.dll">
-      <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extenion)</PackagePath>
+      <PackagePath>runtimes/win7-x64/native/</PackagePath>
     </Content>
     <Content Include="$(FFmpegDir)\libavformat\avformat-57.dll">
-      <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extenion)</PackagePath>
+      <PackagePath>runtimes/win7-x64/native/</PackagePath>
     </Content>
     <Content Include="$(FFmpegDir)\libavutil\avutil-55.dll">
-      <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extenion)</PackagePath>
+      <PackagePath>runtimes/win7-x64/native/</PackagePath>
     </Content>
     <Content Include="$(FFmpegDir)\libswscale\swscale-4.dll">
-      <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extenion)</PackagePath>
+      <PackagePath>runtimes/win7-x64/native/</PackagePath>
     </Content>
   </ItemGroup>
 
