@@ -20,9 +20,10 @@ echo Building FFmpeg
 cd ffmpeg-3.3.4
 flags_generic="--arch=x86_64 --target-os=mingw32 --cross-prefix=x86_64-w64-mingw32- --pkg-config=pkg-config --disable-static --enable-shared --enable-cuda --enable-cuvid --enable-dxva2"
 flags_minimal="--disable-programs --disable-doc --disable-avdevice --disable-swresample --disable-postproc --disable-avfilter --disable-postproc --disable-avfilter --disable-network --disable-everything"
+flags_mpeg="--enable-encoder=mpeg1video --enable-decoder=mpeg1_cuvid --enable-decoder=mpeg1_vdpau --enable-decoder=mpeg1video"
 flags_h264="--enable-decoder=h264 --enable-decoder=h264_cuvid --enable-hwaccel=h264_cuvid --enable-hwaccel=h264_dxva2 --enable-parser=h264 --enable-demuxer=h264"
 flags_h265="--enable-encoder=libkvazaar --enable-libkvazaar"
-flags="$flags_generic $flags_minimal $flags_h264 $flags_h265 --enable-protocol=file"
+flags="$flags_generic $flags_minimal $flags_mpeg $flags_h264 $flags_h265 --enable-protocol=file"
 LIBS="-lpthread" ./configure $flags
 make
 cd ..
