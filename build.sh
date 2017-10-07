@@ -36,21 +36,21 @@ else
 	echo "Building FFmpeg natively"
 fi
 
-flags_generic="--disable-static --enable-shared --enable-cuda --enable-dxva2"
+flags_generic="--disable-static --enable-shared --enable-cuda"
 flags_minimal="--disable-programs --disable-doc --disable-avdevice --disable-swresample --disable-postproc --disable-avfilter --disable-postproc --disable-avfilter --disable-network --disable-everything"
 flags_mpeg="--enable-encoder=mpeg1video --enable-decoder=mpeg1_vdpau --enable-decoder=mpeg1video"
-flags_h264="--enable-decoder=h264 --enable-hwaccel=h264_dxva2 --enable-parser=h264 --enable-demuxer=h264"
+flags_h264="--enable-decoder=h264 --enable-parser=h264 --enable-demuxer=h264"
 flags_h265="--enable-encoder=libkvazaar --enable-libkvazaar"
 
 
 if [ "x$CUVID" = "xyes" ]
 then
-	echo "Building FFmpeg with cuvid support"
-	flags_generic="$flags_generic --enable-cuvid"
+	echo "Building FFmpeg with cuvid/dxva2 support"
+	flags_generic="$flags_generic --enable-cuvid --enable-dxva2"
 	flags_mpeg="$flags_mpeg --enable-decoder=mpeg1_cuvid"
-	flags_h264="$flags_h264 --enable-decoder=h264_cuvid --enable-hwaccel=h264_cuvid"
+	flags_h264="$flags_h264 --enable-decoder=h264_cuvid --enable-hwaccel=h264_cuvid --enable-hwaccel=h264_dxva2"
 else
-	echo "Building FFmpeg without cuvid support"
+	echo "Building FFmpeg without cuvid/dxva support"
 fi
 
 flags="$flags_cross $flags_generic $flags_minimal $flags_mpeg $flags_h264 $flags_h265 --enable-protocol=file"
