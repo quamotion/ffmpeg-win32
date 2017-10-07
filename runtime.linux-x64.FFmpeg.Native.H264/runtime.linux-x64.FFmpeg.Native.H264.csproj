@@ -20,20 +20,20 @@
 
   <!-- We cross build on Linux, so we're detecting Linux here. -->
   <ItemGroup Condition="$([MSBuild]::IsOsPlatform('Linux')) AND '$(CROSS)' == 'no'">
-    <Content Include="$(FFmpegDir)\libavcodec\libavcodec.57.so">
+    <Content Include="$(FFmpegDir)\libavcodec\libavcodec.so.57">
       <PackagePath>runtimes/linux-x64/native/</PackagePath>
     </Content>
-    <Content Include="$(FFmpegDir)\libavformat\libavformat.57.so">
+    <Content Include="$(FFmpegDir)\libavformat\libavformat.so.57">
       <PackagePath>runtimes/linux-x64/native/</PackagePath>
     </Content>
-    <Content Include="$(FFmpegDir)\libavutil\libavutil.55.so">
+    <Content Include="$(FFmpegDir)\libavutil\libavutil.so.55">
       <PackagePath>runtimes/linux-x64/native/</PackagePath>
     </Content>
-    <Content Include="$(FFmpegDir)\libswscale\libswscale.4.so">
+    <Content Include="$(FFmpegDir)\libswscale\libswscale.so.4">
       <PackagePath>runtimes/linux-x64/native/</PackagePath>
     </Content>
 
-    <Content Include="$(KvazaarDir)\src\.libs\libkvazaar.3.so">
+    <Content Include="$(KvazaarDir)\src\.libs\libkvazaar.so.3">
       <PackagePath>runtimes/linux-x64/native/</PackagePath>
     </Content>
   </ItemGroup>
