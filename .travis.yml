@@ -1,9 +1,9 @@
 matrix:
   include:
     - os: osx
+      env: CROSS=yes
+      osx_image: xcode8.1
     - os: linux
-
-osx_image: xcode8.1
 
 addons:
   apt:
