@@ -8,7 +8,6 @@ mkdir -p $prefix/lib/pkgconfig
 export CFLAGS="$CFLAGS -I$prefix/include"
 export PKG_CONFIG_PATH=$prefix/lib/pkgconfig
 export LDFLAGS="$LDFLAGS -L$prefix/lib"
-export PKG_CONFIG_DEBUG_SPEW=1
 
 cd kvazaar-1.1.0
 
