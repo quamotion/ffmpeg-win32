@@ -5,7 +5,7 @@ matrix:
     - os: linux
       env: CROSS=yes CUVID=yes
     - os: linux
-      env: CROSS=no CUVID=yes
+      env: CROSS=no CUVID=no
 
 addons:
   apt:
