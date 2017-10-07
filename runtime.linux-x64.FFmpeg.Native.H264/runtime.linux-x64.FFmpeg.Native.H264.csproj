@@ -19,25 +19,22 @@
   </PropertyGroup>
 
   <!-- We cross build on Linux, so we're detecting Linux here. -->
-  <ItemGroup Condition="$([MSBuild]::IsOsPlatform('Linux')) AND '$(CROSS)' == 'yes'">
-    <Content Include="$(FFmpegDir)\libavcodec\avcodec-57.dll">
-      <PackagePath>runtimes/win7-x64/native/</PackagePath>
+  <ItemGroup Condition="$([MSBuild]::IsOsPlatform('Linux')) AND '$(CROSS)' == 'no'">
+    <Content Include="$(FFmpegDir)\libavcodec\libavcodec.57.so">
+      <PackagePath>runtimes/linux-x64/native/</PackagePath>
     </Content>
-    <Content Include="$(FFmpegDir)\libavformat\avformat-57.dll">
-      <PackagePath>runtimes/win7-x64/native/</PackagePath>
+    <Content Include="$(FFmpegDir)\libavformat\libavformat.57.so">
+      <PackagePath>runtimes/linux-x64/native/</PackagePath>
     </Content>
-    <Content Include="$(FFmpegDir)\libavutil\avutil-55.dll">
-      <PackagePath>runtimes/win7-x64/native/</PackagePath>
+    <Content Include="$(FFmpegDir)\libavutil\libavutil.55.so">
+      <PackagePath>runtimes/linux-x64/native/</PackagePath>
     </Content>
-    <Content Include="$(FFmpegDir)\libswscale\swscale-4.dll">
-      <PackagePath>runtimes/win7-x64/native/</PackagePath>
-    </Content>
-    <Content Include="/usr/x86_64-w64-mingw32/lib/libwinpthread-1.dll">
-      <PackagePath>runtimes/win7-x64/native/</PackagePath>
+    <Content Include="$(FFmpegDir)\libswscale\libswscale.4.so">
+      <PackagePath>runtimes/linux-x64/native/</PackagePath>
     </Content>
 
-    <Content Include="$(KvazaarDir)\src\.libs\libkvazaar-3.dll">
-      <PackagePath>runtimes/win7-x64/native/</PackagePath>
+    <Content Include="$(KvazaarDir)\src\.libs\libkvazaar.3.so">
+      <PackagePath>runtimes/linux-x64/native/</PackagePath>
     </Content>
   </ItemGroup>
 

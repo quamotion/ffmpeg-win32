@@ -17,6 +17,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\runtime.linux-x64.FFmpeg.Native.H264\runtime.linux-x64.FFmpeg.Native.H264.csproj" />
     <ProjectReference Include="..\runtime.osx-x64.FFmpeg.Native.H264\runtime.osx-x64.FFmpeg.Native.H264.csproj" />
     <ProjectReference Include="..\runtime.win7-x64.FFmpeg.Native.H264\runtime.win7-x64.FFmpeg.Native.H264.csproj" />
   </ItemGroup>

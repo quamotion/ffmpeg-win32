@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "runtime.osx-x64.FFmpeg.Nati
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "runtime.win7-x64.FFmpeg.Native.H264", "runtime.win7-x64.FFmpeg.Native.H264\runtime.win7-x64.FFmpeg.Native.H264.csproj", "{6148E056-3B2D-4B3A-8DA1-3F43642418CF}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "runtime.linux-x64.FFmpeg.Native.H264", "runtime.linux-x64.FFmpeg.Native.H264\runtime.linux-x64.FFmpeg.Native.H264.csproj", "{9ADCF1EE-54DA-4BF5-90E7-9FFD9D491467}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,18 @@ Global
 		{6148E056-3B2D-4B3A-8DA1-3F43642418CF}.Release|x64.Build.0 = Release|Any CPU
 		{6148E056-3B2D-4B3A-8DA1-3F43642418CF}.Release|x86.ActiveCfg = Release|Any CPU
 		{6148E056-3B2D-4B3A-8DA1-3F43642418CF}.Release|x86.Build.0 = Release|Any CPU
+		{9ADCF1EE-54DA-4BF5-90E7-9FFD9D491467}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9ADCF1EE-54DA-4BF5-90E7-9FFD9D491467}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9ADCF1EE-54DA-4BF5-90E7-9FFD9D491467}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9ADCF1EE-54DA-4BF5-90E7-9FFD9D491467}.Debug|x64.Build.0 = Debug|Any CPU
+		{9ADCF1EE-54DA-4BF5-90E7-9FFD9D491467}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9ADCF1EE-54DA-4BF5-90E7-9FFD9D491467}.Debug|x86.Build.0 = Debug|Any CPU
+		{9ADCF1EE-54DA-4BF5-90E7-9FFD9D491467}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9ADCF1EE-54DA-4BF5-90E7-9FFD9D491467}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9ADCF1EE-54DA-4BF5-90E7-9FFD9D491467}.Release|x64.ActiveCfg = Release|Any CPU
+		{9ADCF1EE-54DA-4BF5-90E7-9FFD9D491467}.Release|x64.Build.0 = Release|Any CPU
+		{9ADCF1EE-54DA-4BF5-90E7-9FFD9D491467}.Release|x86.ActiveCfg = Release|Any CPU
+		{9ADCF1EE-54DA-4BF5-90E7-9FFD9D491467}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
