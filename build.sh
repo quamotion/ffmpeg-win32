@@ -20,7 +20,7 @@ echo Building FFmpeg
 cd ffmpeg-3.3.4
 flags_corss=""
 
-if [ "x$CROSS" -eq "xyes" ]
+if [ "x$CROSS" = "xyes" ]
 then
 	echo "Cross-building"
 	flags_cross="--arch=x86_64 --target-os=mingw32 --cross-prefix=x86_64-w64-mingw32- --pkg-config=pkg-config"
