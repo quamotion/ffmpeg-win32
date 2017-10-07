@@ -11,7 +11,16 @@ export LDFLAGS="$LDFLAGS -L$prefix/lib"
 export PKG_CONFIG_DEBUG_SPEW=1
 
 cd kvazaar-1.1.0
-LIBS="-lpthread" ./configure --prefix=$prefix --host=x86_64-w64-mingw32 --disable-static --enable-shared
+
+if [ "x$CROSS" = "xyes" ]
+then
+	echo "Cross-building libkvazaar"
+	LIBS="-lpthread" ./configure --prefix=$prefix --disable-static --enable-shared --host=x86_64-w64-mingw32 
+else
+	echo "Building libkvazaar natively"
+	LIBS="-lpthread" ./configure --prefix=$prefix --disable-static --enable-shared
+fi
+
 make
 make install
 cd ..
@@ -22,10 +31,10 @@ flags_cross=""
 
 if [ "x$CROSS" = "xyes" ]
 then
-	echo "Cross-building"
+	echo "Cross-building FFmpeg"
 	flags_cross="--arch=x86_64 --target-os=mingw32 --cross-prefix=x86_64-w64-mingw32- --pkg-config=pkg-config"
 else
-	echo "Building natively"
+	echo "Building FFmpeg natively"
 fi
 
 flags_generic="--disable-static --enable-shared --enable-cuda --enable-cuvid --enable-dxva2"
