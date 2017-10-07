@@ -2,8 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>
-    <FFmpegDir>$(MSBuildThisFileDirectory)\..\ffmpeg-3.3.4\</FFmpegDir>
-    <KvazaarDir>$(MSBuildThisFileDirectory)\..\kvazaar-1.1.0\</KvazaarDir>
     <PackageIconUrl>https://ffmpeg.org/favicon.ico</PackageIconUrl>
     <Authors>FFmpeg Team</Authors>
     <Company></Company>
@@ -19,25 +17,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="$(FFmpegDir)\libavcodec\avcodec-57.dll">
-      <PackagePath>runtimes/win7-x64/native/</PackagePath>
-    </Content>
-    <Content Include="$(FFmpegDir)\libavformat\avformat-57.dll">
-      <PackagePath>runtimes/win7-x64/native/</PackagePath>
-    </Content>
-    <Content Include="$(FFmpegDir)\libavutil\avutil-55.dll">
-      <PackagePath>runtimes/win7-x64/native/</PackagePath>
-    </Content>
-    <Content Include="$(FFmpegDir)\libswscale\swscale-4.dll">
-      <PackagePath>runtimes/win7-x64/native/</PackagePath>
-    </Content>
-    <Content Include="/usr/x86_64-w64-mingw32/lib/libwinpthread-1.dll">
-      <PackagePath>runtimes/win7-x64/native/</PackagePath>
-    </Content>
-
-    <Content Include="$(KvazaarDir)\src\.libs\libkvazaar-3.dll">
-      <PackagePath>runtimes/win7-x64/native/</PackagePath>
-    </Content>
+    <ProjectReference Include="..\runtime.osx-x64.FFmpeg.Native.H264\runtime.osx-x64.FFmpeg.Native.H264.csproj" />
+    <ProjectReference Include="..\runtime.win7-x64.FFmpeg.Native.H264\runtime.win7-x64.FFmpeg.Native.H264.csproj" />
   </ItemGroup>
 
 </Project>

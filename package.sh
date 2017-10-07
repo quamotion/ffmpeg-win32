@@ -1,4 +1,2 @@
-cd FFmpeg.Native.H264/
-~/dotnet/dotnet restore
+~/dotnet/dotnet restore --version-suffix r$TRAVIS_BUILD_NUMBER
 ~/dotnet/dotnet pack -c Release --version-suffix r$TRAVIS_BUILD_NUMBER
-cd ../

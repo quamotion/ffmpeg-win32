@@ -14,7 +14,6 @@ addons:
     - libunwind8
 
 install:
-- pip install --user azure-cli
 - ./download.sh
 - ./install-dotnet-$TRAVIS_OS_NAME.sh
 
@@ -23,5 +22,6 @@ script:
 - ./package.sh
 
 after_success:
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then az=$HOME/.local/bin/az; fi
-- $az storage blob upload -f FFmpeg.Native.H264/bin/Release/FFmpeg.Native.H264.1.0.0-r$TRAVIS_BUILD_NUMBER.nupkg -c ffmpeg -n FFmpeg.Native.H264.1.0.0-r$TRAVIS_BUILD_NUMBER.nupkg
+-  if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then dotnet nuget push FFmpeg.Native.H264/bin/Release/FFmpeg.Native.H264.1.0.0-r$TRAVIS_BUILD_NUMBER.nupkg -s nuget.org -k $NUGET_KEY; fi
+-  if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then dotnet nuget push runtime.win7-x64.FFmpeg.Native.H264/bin/Release/runtime.win7-x64.FFmpeg.Native.H264.1.0.0-r$TRAVIS_BUILD_NUMBER.nupkg -s nuget.org -k $NUGET_KEY; fi
+-  if [[ "$TRAVIS_OS_NAME" == "macos" ]]; then dotnet nuget push runtime.osx-x64.FFmpeg.Native.H264/bin/Release/runtime.osx-x64.FFmpeg.Native.H264.1.0.0-r$TRAVIS_BUILD_NUMBER.nupkg -s nuget.org -k $NUGET_KEY; fi
