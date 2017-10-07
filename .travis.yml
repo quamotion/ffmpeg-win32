@@ -1,3 +1,10 @@
+matrix:
+  include:
+    - os: osx
+    - os: linux
+
+osx_image: xcode8.1
+
 addons:
   apt:
     packages:
@@ -9,7 +16,7 @@ addons:
 install:
 - pip install --user azure-cli
 - ./download.sh
-- ./install-dotnet.sh
+- ./install-dotnet-$TRAVIS_OS_NAME.sh
 
 script:
 - ./build.sh
