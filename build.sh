@@ -18,12 +18,14 @@ cd ..
 
 echo Building FFmpeg
 cd ffmpeg-3.3.4
-flags_corss=""
+flags_cross=""
 
 if [ "x$CROSS" = "xyes" ]
 then
 	echo "Cross-building"
 	flags_cross="--arch=x86_64 --target-os=mingw32 --cross-prefix=x86_64-w64-mingw32- --pkg-config=pkg-config"
+else
+	echo "Building natively"
 fi
 
 flags_generic="--disable-static --enable-shared --enable-cuda --enable-cuvid --enable-dxva2"
