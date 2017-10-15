@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.4</TargetFramework>
+    <TargetFramework>netstandard1.5</TargetFramework>
     <FFmpegDir>$(MSBuildThisFileDirectory)\..\ffmpeg-3.3.4\</FFmpegDir>
     <KvazaarDir>$(MSBuildThisFileDirectory)\..\kvazaar-1.1.0\</KvazaarDir>
     <PackageIconUrl>https://ffmpeg.org/favicon.ico</PackageIconUrl>
