@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.5</TargetFramework>
+    <TargetFrameworks>netstandard1.5;netstandard2.0</TargetFrameworks>
     <PackageIconUrl>https://ffmpeg.org/favicon.ico</PackageIconUrl>
     <Authors>FFmpeg Team</Authors>
     <Company></Company>
