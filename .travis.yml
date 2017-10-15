@@ -17,6 +17,7 @@ addons:
 
 install:
 - ./download.sh
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install yasm; fi
 - ./install-dotnet-$TRAVIS_OS_NAME.sh
 
