@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
+﻿using System.IO;
 using System.Reflection;
 
 namespace FFmpeg.Native.H264
@@ -14,7 +11,7 @@ namespace FFmpeg.Native.H264
             var assemblyLocation = assembly.Location;
             var assemblyDirectory = Path.GetDirectoryName(assemblyLocation);
 
-            var fileName = $"{name}.{version}.dylib";
+            var fileName = $"lib{name}.{version}.dylib";
 
             // Look for the library in the same location as this assembly. This will be the production
             // layout (i.e. the result of dotnet build, dotnet pack,...)

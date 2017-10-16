@@ -11,7 +11,7 @@ namespace FFmpeg.Native.H264
             var assemblyLocation = assembly.Location;
             var assemblyDirectory = Path.GetDirectoryName(assemblyLocation);
 
-            var fileName = $"{name}.so.{version}";
+            var fileName = $"lib{name}.so.{version}";
 
             // Look for the library in the same location as this assembly. This will be the production
             // layout (i.e. the result of dotnet build, dotnet pack,...)
