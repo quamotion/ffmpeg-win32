@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard1.5;netstandard2.0</TargetFrameworks>
+    <OutDir>$(MSBuildThisFileDirectory)\..\out\</OutDir>
     <FFmpegDir>$(MSBuildThisFileDirectory)\..\ffmpeg-3.3.4\</FFmpegDir>
     <KvazaarDir>$(MSBuildThisFileDirectory)\..\kvazaar-1.1.0\</KvazaarDir>
     <PackageIconUrl>https://ffmpeg.org/favicon.ico</PackageIconUrl>
@@ -19,19 +20,19 @@
   </PropertyGroup>
 
   <ItemGroup Condition="$([MSBuild]::IsOsPlatform('OSX'))">
-    <Content Include="$(FFmpegDir)\libavcodec\libavcodec.57.dylib">
+    <Content Include="$(OutDir)\libavcodec.57.dylib">
       <PackagePath>runtimes/osx-x64/native/</PackagePath>
     </Content>
-    <Content Include="$(FFmpegDir)\libavformat\libavformat.57.dylib">
+    <Content Include="$(OutDir)\libavformat.57.dylib">
       <PackagePath>runtimes/osx-x64/native/</PackagePath>
     </Content>
-    <Content Include="$(FFmpegDir)\libavutil\libavutil.55.dylib">
+    <Content Include="$(OutDir)\libavutil.55.dylib">
       <PackagePath>runtimes/osx-x64/native/</PackagePath>
     </Content>
-    <Content Include="$(FFmpegDir)\libswscale\libswscale.4.dylib">
+    <Content Include="$(OutDir)\libswscale.4.dylib">
       <PackagePath>runtimes/osx-x64/native/</PackagePath>
     </Content>
-    <Content Include="$(KvazaarDir)\src\.libs\libkvazaar.3.dylib">
+    <Content Include="$(OutDir)\libkvazaar.3.dylib">
       <PackagePath>runtimes/osx-x64/native/</PackagePath>
     </Content>
   </ItemGroup>

@@ -2,6 +2,7 @@ matrix:
   include:
     - os: osx
       osx_image: xcode8.1
+      env: CROSS=no
     - os: linux
       env: CROSS=yes CUVID=yes
     - os: linux
@@ -19,10 +20,12 @@ install:
 - ./download.sh
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install yasm; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]] && [[ "$CROSS" == "no" ]]; then ./install-patchelf.sh; fi
 - ./install-dotnet-$TRAVIS_OS_NAME.sh
 
 script:
 - ./build.sh
+- if [[ "$CROSS" == "no" ]]; then ./patch-libraries-$TRAVIS_OS_NAME.sh; fi
 - ./package.sh
 
 after_success:

@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard1.5;netstandard2.0</TargetFrameworks>
+    <OutDir>$(MSBuildThisFileDirectory)\..\out\</OutDir>
     <FFmpegDir>$(MSBuildThisFileDirectory)\..\ffmpeg-3.3.4\</FFmpegDir>
     <KvazaarDir>$(MSBuildThisFileDirectory)\..\kvazaar-1.1.0\</KvazaarDir>
     <PackageIconUrl>https://ffmpeg.org/favicon.ico</PackageIconUrl>
@@ -20,20 +21,20 @@
 
   <!-- We cross build on Linux, so we're detecting Linux here. -->
   <ItemGroup Condition="$([MSBuild]::IsOsPlatform('Linux')) AND '$(CROSS)' == 'no'">
-    <Content Include="$(FFmpegDir)\libavcodec\libavcodec.so.57">
+    <Content Include="$(OutDir)\libavcodec.so.57">
       <PackagePath>runtimes/linux-x64/native/</PackagePath>
     </Content>
-    <Content Include="$(FFmpegDir)\libavformat\libavformat.so.57">
+    <Content Include="$(OutDir)\libavformat.so.57">
       <PackagePath>runtimes/linux-x64/native/</PackagePath>
     </Content>
-    <Content Include="$(FFmpegDir)\libavutil\libavutil.so.55">
+    <Content Include="$(OutDir)\libavutil.so.55">
       <PackagePath>runtimes/linux-x64/native/</PackagePath>
     </Content>
-    <Content Include="$(FFmpegDir)\libswscale\libswscale.so.4">
+    <Content Include="$(OutDir)\libswscale.so.4">
       <PackagePath>runtimes/linux-x64/native/</PackagePath>
     </Content>
 
-    <Content Include="$(KvazaarDir)\src\.libs\libkvazaar.so.3">
+    <Content Include="$(OutDir)\libkvazaar.so.3">
       <PackagePath>runtimes/linux-x64/native/</PackagePath>
     </Content>
   </ItemGroup>
