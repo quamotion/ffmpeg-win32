@@ -1,7 +1,7 @@
 #!/bin/sh
-out="$HOME/out/"
-ffmpeg="$HOME/ffmpeg-3.3.4/"
-kvazaar="$HOME/kvazaar-1.1.0/"
+out="$TRAVIS_BUILD_DIR/out/"
+ffmpeg="$TRAVIS_BUILD_DIR/ffmpeg-3.3.4/"
+kvazaar="$TRAVIS_BUILD_DIR/kvazaar-1.1.0/"
 
 mkdir -p $out
 
