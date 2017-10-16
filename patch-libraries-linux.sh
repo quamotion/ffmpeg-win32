@@ -1,5 +1,5 @@
 #!/bin/sh
-out="$TRAVIS_BUILD_DIR/out/"
+out="$TRAVIS_BUILD_DIR/bin/"
 ffmpeg="$TRAVIS_BUILD_DIR/ffmpeg-3.3.4/"
 kvazaar="$TRAVIS_BUILD_DIR/kvazaar-1.1.0/"
 
@@ -17,7 +17,7 @@ cp $kvazaar/src/.libs/libkvazaar.so.3 $out
 
 patchelf=patchelf-0.9/src/patchelf
 
-for f in $out/*; do
+for f in $out/*.so.*; do
    chmod +w $f
 
    $patchelf --set-rpath '${ORIGIN}' $f

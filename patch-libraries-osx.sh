@@ -1,5 +1,5 @@
 #!/bin/sh
-out="$TRAVIS_BUILD_DIR/out/"
+out="$TRAVIS_BUILD_DIR/bin/"
 ffmpeg="$TRAVIS_BUILD_DIR/ffmpeg-3.3.4/"
 kvazaar="$TRAVIS_BUILD_DIR/kvazaar-1.1.0/"
 

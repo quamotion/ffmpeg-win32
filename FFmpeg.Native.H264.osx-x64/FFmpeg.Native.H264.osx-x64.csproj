@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard1.5;netstandard2.0</TargetFrameworks>
-    <NativeOutDir>$(MSBuildThisFileDirectory)\..\out\</NativeOutDir>
+    <NativeOutDir>$(MSBuildThisFileDirectory)\..\bin\</NativeOutDir>
     <FFmpegDir>$(MSBuildThisFileDirectory)\..\ffmpeg-3.3.4\</FFmpegDir>
     <KvazaarDir>$(MSBuildThisFileDirectory)\..\kvazaar-1.1.0\</KvazaarDir>
     <PackageIconUrl>https://ffmpeg.org/favicon.ico</PackageIconUrl>
