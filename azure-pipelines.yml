@@ -91,8 +91,11 @@ jobs:
   - task: DownloadBuildArtifacts@0
     inputs:
       artifactName: ffmpeg
-  - script:
+  - script: |
       cd FFmpeg.Native
+
+      # Run dotnet pack with and without a version suffix
+      dotnet pack -o $(Build.ArtifactStagingDirectory) -c Release --version-suffix "ci-$(Build.BuildNumber)"
       dotnet pack -o $(Build.ArtifactStagingDirectory) -c Release
   - task: PublishBuildArtifacts@1
     inputs:

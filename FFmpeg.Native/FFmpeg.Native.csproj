@@ -15,8 +15,7 @@
     <RepositoryUrl>https://github.com/qmfrederik/ffmpeg-win32/</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>ffmpeg native</PackageTags>
-    <AssemblyVersion>3.3.4.0</AssemblyVersion>
-    <FileVersion>3.3.4.0</FileVersion>
+    <Version Condition="'$(Version)' == ''">$(FFMPEG_VERSION)</Version>
   </PropertyGroup>
 
   <ItemGroup>
