@@ -56,7 +56,7 @@ jobs:
 
 - job: macos
   pool:
-    vmImage: 'macOS-10.15	'
+    vmImage: 'macOS-10.15'
   steps:
   - script: |
       wget -nv -nc http://ffmpeg.org/releases/ffmpeg-$(FFMPEG_VERSION).tar.bz2 -O ffmpeg-$(FFMPEG_VERSION).tar.bz2
@@ -90,7 +90,7 @@ jobs:
       artifactName: ffmpeg
   - script:
       cd FFmpeg.Native
-      dotnet pack -o $(Build.ArtifactStagingDirectory)
+      dotnet pack -o $(Build.ArtifactStagingDirectory) -c Release
   - task: PublishBuildArtifacts@1
     inputs:
       pathtoPublish: '$(Build.ArtifactStagingDirectory)'
