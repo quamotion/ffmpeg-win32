@@ -1,8 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.4</TargetFramework>
-    <FFmpegDir>$(MSBuildThisFileDirectory)\..\ffmpeg-3.3.4\</FFmpegDir>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <FFmpegWin64Dir Condition="'$(FFmpegWin64Dir)' == ''">$(SYSTEM_ARTIFACTSDIRECTORY)/ffmpeg/win7-x64/usr/local/</FFmpegWin64Dir>
+    <FFmpegWin32Dir Condition="'$(FFmpegWin32Dir)' == ''">$(SYSTEM_ARTIFACTSDIRECTORY)/ffmpeg/win7-x86/usr/local/</FFmpegWin32Dir>
+    <FFmpegOSXDir Condition="'$(FFmpegOSXDir)' == ''">$(SYSTEM_ARTIFACTSDIRECTORY)/ffmpeg/osx-x64/usr/local/</FFmpegOSXDir>
     <PackageIconUrl>https://ffmpeg.org/favicon.ico</PackageIconUrl>
     <Authors>FFmpeg Team</Authors>
     <Company></Company>
@@ -13,41 +15,31 @@
     <RepositoryUrl>https://github.com/qmfrederik/ffmpeg-win32/</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>ffmpeg native</PackageTags>
-    <AssemblyVersion>3.3.4.0</AssemblyVersion>
-    <FileVersion>3.3.4.0</FileVersion>
+    <VersionPrefix Condition="'$(VersionPrefix)' == ''">$(FFMPEG_VERSION)</VersionPrefix>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="$(FFmpegDir)\libavcodec\avcodec-57.dll">
-      <PackagePath>runtimes/win7-x64/native/</PackagePath>
+    <Content Include="$(FFmpegWin64Dir)/bin/*.dll">
+      <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
     </Content>
-    <Content Include="$(FFmpegDir)\libavdevice\avdevice-57.dll">
-      <PackagePath>runtimes/win7-x64/native/</PackagePath>
+    <Content Include="$(FFmpegWin64Dir)/bin/*.exe">
+      <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
     </Content>
-    <Content Include="$(FFmpegDir)\libavfilter\avfilter-6.dll">
-      <PackagePath>runtimes/win7-x64/native/</PackagePath>
+
+    <Content Include="$(FFmpegWin32Dir)/bin/*.dll">
+      <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
     </Content>
-    <Content Include="$(FFmpegDir)\libavformat\avformat-57.dll">
-      <PackagePath>runtimes/win7-x64/native/</PackagePath>
+    <Content Include="$(FFmpegWin32Dir)/bin/*.exe">
+      <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
     </Content>
-    <Content Include="$(FFmpegDir)\libavutil\avutil-55.dll">
-      <PackagePath>runtimes/win7-x64/native/</PackagePath>
-    </Content>
-    <Content Include="$(FFmpegDir)\libswresample\swresample-2.dll">
-      <PackagePath>runtimes/win7-x64/native/</PackagePath>
-    </Content>
-    <Content Include="$(FFmpegDir)\libswscale\swscale-4.dll">
-      <PackagePath>runtimes/win7-x64/native/</PackagePath>
-    </Content>
-    <Content Include="$(FFmpegDir)\ffmpeg.exe">
-      <PackagePath>runtimes/win7-x64/native/</PackagePath>
-    </Content>
-    <Content Include="$(FFmpegDir)\ffprobe.exe">
-      <PackagePath>runtimes/win7-x64/native/</PackagePath>
-    </Content>
-    <Content Include="/usr/x86_64-w64-mingw32/lib/libwinpthread-1.dll">
-      <PackagePath>runtimes/win7-x64/native/</PackagePath>
+
+    <Content Include="$(FFmpegOSXDir)/lib/*.dylib">
+      <PackagePath>runtimes/osx-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
     </Content>
   </ItemGroup>
-
 </Project>
