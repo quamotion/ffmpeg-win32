@@ -59,6 +59,9 @@ jobs:
     vmImage: 'macOS-10.15'
   steps:
   - script: |
+      brew install yasm
+    displayName: Install YASM
+  - script: |
       wget -nv -nc http://ffmpeg.org/releases/ffmpeg-$(FFMPEG_VERSION).tar.bz2 -O ffmpeg-$(FFMPEG_VERSION).tar.bz2
       tar xjf ffmpeg-$(FFMPEG_VERSION).tar.bz2
     displayName: Download FFmpeg
