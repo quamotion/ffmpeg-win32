@@ -76,6 +76,29 @@ jobs:
       make DESTDIR=$(Build.ArtifactStagingDirectory)/osx-x64 install
     workingDirectory: ffmpeg-$(FFMPEG_VERSION)
     displayName: Install FFmpeg
+  - script: |
+      out="$(Build.ArtifactStagingDirectory)/osx-x64/usr/local/lib"
+
+      # Patch the dylib dependencies for all .dylib files in the out directory
+      for f in "$out/"*.dylib; do
+        chmod +w "$f"
+
+        # Skip the first two lines of the otool output, this is just the name of the dylib itself
+        dylibs=`otool -L "$f" | tail -n +3 | grep "/usr/local/lib/" | awk -F' ' '{ print $1 }'`
+
+        for dylib in $dylibs; do
+          basename=`basename "$dylib"`
+
+          if [ ! -f "$out/$basename" ]; then
+              echo "error: The dylib file '$out/$basename' does not exist in the output folder; referenced from $f"
+          fi
+
+          # https://www.mikeash.com/pyblog/friday-qa-2009-11-06-linking-and-install-names.html
+          install_name_tool -change "$dylib" "@loader_path/$basename" "$f"
+        done;
+
+        otool -L "$f"
+      done
   - task: PublishBuildArtifacts@1
     inputs:
       pathtoPublish: '$(Build.ArtifactStagingDirectory)'
