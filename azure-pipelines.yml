@@ -42,12 +42,20 @@ jobs:
       make
     workingDirectory: ffmpeg-$(FFMPEG_VERSION)
     displayName: Build FFmpeg
-  - script:
+  - script: |
       make DESTDIR=$(Build.ArtifactStagingDirectory)/$(rid) install
     workingDirectory: ffmpeg-$(FFMPEG_VERSION)
     displayName: Install FFmpeg
-  - script:
-      cp /usr/$(crossPrefix)/lib/libwinpthread-1.dll $(Build.ArtifactStagingDirectory)/$(rid)/usr/local/bin
+  - script: |
+      libgcc="/usr/lib/gcc/$(crossPrefix)/7.3-posix/libgcc_s_sjlj-1.dll"
+
+      if [ -f "$libgcc" ]; then
+        echo "$libgcc exist"
+        cp $libgcc $(Build.ArtifactStagingDirectory)/$(rid)/usr/local/bin/
+      fi
+
+      cp /usr/$(crossPrefix)/lib/libwinpthread-1.dll $(Build.ArtifactStagingDirectory)/$(rid)/usr/local/bin/
+      
     displayName: Copy additional libraries
   - task: PublishBuildArtifacts@1
     inputs:
