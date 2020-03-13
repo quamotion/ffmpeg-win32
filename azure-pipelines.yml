@@ -66,8 +66,8 @@ jobs:
       sh -c "apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confold" -y install sudo"
     displayName: Set up sudo
   - script: |
-      sudo apt-get install -y patchelf
-    displayName: Set up patchelf
+      sudo apt-get install -y build-essential patchelf gcc g++ yasm libunwind8 wget
+    displayName: Set up patchelf, wget, compiler
   - script: |
       wget -nv -nc http://ffmpeg.org/releases/ffmpeg-$(FFMPEG_VERSION).tar.bz2 -O ffmpeg-$(FFMPEG_VERSION).tar.bz2
       tar xjf ffmpeg-$(FFMPEG_VERSION).tar.bz2
@@ -80,14 +80,14 @@ jobs:
     workingDirectory: ffmpeg-$(FFMPEG_VERSION)
     displayName: Build FFmpeg
   - script:
-      make DESTDIR=$(Build.ArtifactStagingDirectory)/ubuntu.18.04-x64 install
+      make DESTDIR=$(Build.ArtifactStagingDirectory)/linux-x64 install
     workingDirectory: ffmpeg-$(FFMPEG_VERSION)
     displayName: Install FFmpeg
   - script: |
-      for f in $(Build.ArtifactStagingDirectory)/ubuntu.18.04-x64/usr/local/lib/*.so.*; do
+      for f in $(Build.ArtifactStagingDirectory)/linux-x64/usr/local/lib/*.so.*; do
         chmod +w $f
 
-        $patchelf --set-rpath '${ORIGIN}' $f
+        patchelf --set-rpath '${ORIGIN}' $f
 
         readelf -d $f
       done

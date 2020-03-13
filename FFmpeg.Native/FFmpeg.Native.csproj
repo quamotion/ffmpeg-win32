@@ -5,6 +5,7 @@
     <FFmpegWin64Dir Condition="'$(FFmpegWin64Dir)' == ''">$(SYSTEM_ARTIFACTSDIRECTORY)/ffmpeg/win7-x64/usr/local/</FFmpegWin64Dir>
     <FFmpegWin32Dir Condition="'$(FFmpegWin32Dir)' == ''">$(SYSTEM_ARTIFACTSDIRECTORY)/ffmpeg/win7-x86/usr/local/</FFmpegWin32Dir>
     <FFmpegOSXDir Condition="'$(FFmpegOSXDir)' == ''">$(SYSTEM_ARTIFACTSDIRECTORY)/ffmpeg/osx-x64/usr/local/</FFmpegOSXDir>
+    <FFmpegLinuxDir Condition="'$(FFmpegLinuxDir)' == ''">$(SYSTEM_ARTIFACTSDIRECTORY)/ffmpeg/linux-x64/usr/local/</FFmpegLinuxDir>
     <PackageIconUrl>https://ffmpeg.org/favicon.ico</PackageIconUrl>
     <Authors>FFmpeg Team</Authors>
     <Company></Company>
@@ -39,6 +40,11 @@
 
     <Content Include="$(FFmpegOSXDir)/lib/*.dylib">
       <PackagePath>runtimes/osx-x64/native/%(Filename)%(Extension)</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+
+    <Content Include="$(FFmpegLinuxDir)/lib/*.so">
+      <PackagePath>runtimes/linux-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
   </ItemGroup>
