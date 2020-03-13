@@ -2,9 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <FFmpegWin64Dir Condition="'$(FFmpegWin64Dir)' == ''">$(SYSTEM_ARTIFACTSDIRECTORY)/ffmpeg/win-x64/usr/local/lib/</FFmpegWin64Dir>
-    <FFmpegWin32Dir Condition="'$(FFmpegWin32Dir)' == ''">$(SYSTEM_ARTIFACTSDIRECTORY)/ffmpeg/win-x86/usr/local/lib/</FFmpegWin32Dir>
-    <FFmpegOSXDir Condition="'$(FFmpegOSXDir)' == ''">$(SYSTEM_ARTIFACTSDIRECTORY)/ffmpeg/osx-x64/usr/local/lib/</FFmpegOSXDir>
+    <FFmpegWin64Dir Condition="'$(FFmpegWin64Dir)' == ''">$(SYSTEM_ARTIFACTSDIRECTORY)/ffmpeg/win7-x64/usr/local/</FFmpegWin64Dir>
+    <FFmpegWin32Dir Condition="'$(FFmpegWin32Dir)' == ''">$(SYSTEM_ARTIFACTSDIRECTORY)/ffmpeg/win7-x86/usr/local/</FFmpegWin32Dir>
+    <FFmpegOSXDir Condition="'$(FFmpegOSXDir)' == ''">$(SYSTEM_ARTIFACTSDIRECTORY)/ffmpeg/osx-x64/usr/local/</FFmpegOSXDir>
     <PackageIconUrl>https://ffmpeg.org/favicon.ico</PackageIconUrl>
     <Authors>FFmpeg Team</Authors>
     <Company></Company>
@@ -15,29 +15,29 @@
     <RepositoryUrl>https://github.com/qmfrederik/ffmpeg-win32/</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>ffmpeg native</PackageTags>
-    <Version Condition="'$(Version)' == ''">$(FFMPEG_VERSION)</Version>
+    <VersionPrefix Condition="'$(VersionPrefix)' == ''">$(FFMPEG_VERSION)</VersionPrefix>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="$(FFmpegWin64Dir)/*.dll">
+    <Content Include="$(FFmpegWin64Dir)/bin/*.dll">
       <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(FFmpegWin64Dir)/*.exe">
+    <Content Include="$(FFmpegWin64Dir)/bin/*.exe">
       <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
 
-    <Content Include="$(FFmpegWin32Dir)/*.dll">
+    <Content Include="$(FFmpegWin32Dir)/bin/*.dll">
       <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="$(FFmpegWin32Dir)/*.exe">
+    <Content Include="$(FFmpegWin32Dir)/bin/*.exe">
       <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
 
-    <Content Include="$(FFmpegOSXDir)/*.dylib">
+    <Content Include="$(FFmpegOSXDir)/lib/*.dylib">
       <PackagePath>runtimes/osx-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>

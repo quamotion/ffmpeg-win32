@@ -10,13 +10,13 @@ jobs:
         arch: x86
         targetOs: mingw32
         crossPrefix: i686-w64-mingw32
-        rid: win-x86
+        rid: win7-x86
         package: w64-i686
       x64:
         arch: x86_64
         targetOs: mingw32
         crossPrefix: x86_64-w64-mingw32
-        rid: win-x64
+        rid: win7-x64
         package: w64-x86-64
   pool:
     vmImage: ubuntu-16.04
@@ -95,9 +95,10 @@ jobs:
       cd FFmpeg.Native
 
       # Run dotnet pack with and without a version suffix
-      dotnet pack -o $(Build.ArtifactStagingDirectory) -c Release --version-suffix "ci-$(Build.BuildNumber)"
-      dotnet pack -o $(Build.ArtifactStagingDirectory) -c Release
+      mkdir -p $(Build.ArtifactStagingDirectory)/nuget
+      dotnet pack -o $(Build.ArtifactStagingDirectory)/nuget -c Release --version-suffix "ci-$(Build.BuildNumber)"
+      dotnet pack -o $(Build.ArtifactStagingDirectory)/nuget -c Release
   - task: PublishBuildArtifacts@1
     inputs:
-      pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      pathtoPublish: '$(Build.ArtifactStagingDirectory)/nuget'
       artifactName: nuget
