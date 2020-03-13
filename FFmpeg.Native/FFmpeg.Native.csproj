@@ -38,12 +38,12 @@
       <Pack>true</Pack>
     </Content>
 
-    <Content Include="$(FFmpegOSXDir)/lib/*.dylib">
+    <Content Include="$(FFmpegOSXDir)/lib/lib*.*.dylib" Exclude="$(FFmpegOSXDir)/lib/lib*.*.*.*.dylib">
       <PackagePath>runtimes/osx-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
 
-    <Content Include="$(FFmpegLinuxDir)/lib/*.so">
+    <Content Include="$(FFmpegLinuxDir)/lib/lib*.so.*" Exclude="$(FFmpegLinuxDir)/lib/lib*.so;$(FFmpegLinuxDir)/lib/lib*.so.*.*.*">
       <PackagePath>runtimes/linux-x64/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>

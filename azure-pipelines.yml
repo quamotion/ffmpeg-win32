@@ -137,7 +137,7 @@ jobs:
         chmod +w "$f"
 
         # Skip the first two lines of the otool output, this is just the name of the dylib itself
-        dylibs=`otool -L "$f" | tail -n +3 | grep "/usr/local/lib/" | awk -F' ' '{ print $1 }'`
+        dylibs=`otool -L "$f" | tail -n +3 | grep "/usr/local/" | awk -F' ' '{ print $1 }'`
 
         for dylib in $dylibs; do
           basename=`basename "$dylib"`
