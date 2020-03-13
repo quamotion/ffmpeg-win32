@@ -42,13 +42,63 @@ jobs:
       make
     workingDirectory: ffmpeg-$(FFMPEG_VERSION)
     displayName: Build FFmpeg
-  - script:
+  - script: |
       make DESTDIR=$(Build.ArtifactStagingDirectory)/$(rid) install
     workingDirectory: ffmpeg-$(FFMPEG_VERSION)
     displayName: Install FFmpeg
-  - script:
-      cp /usr/$(crossPrefix)/lib/libwinpthread-1.dll $(Build.ArtifactStagingDirectory)/$(rid)/usr/local/bin
+  - script: |
+      libgcc="/usr/lib/gcc/$(crossPrefix)/7.3-posix/libgcc_s_sjlj-1.dll"
+
+      if [ -f "$libgcc" ]; then
+        echo "$libgcc exist"
+        cp $libgcc $(Build.ArtifactStagingDirectory)/$(rid)/usr/local/bin/
+      fi
+
+      cp /usr/$(crossPrefix)/lib/libwinpthread-1.dll $(Build.ArtifactStagingDirectory)/$(rid)/usr/local/bin/
+      
     displayName: Copy additional libraries
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      artifactName: ffmpeg
+
+- job: ubuntu
+  pool:
+    vmImage: ubuntu-16.04
+  container:
+    image: ubuntu:18.04
+    options: "--name ci-container -v /usr/bin/docker:/tmp/docker:ro"
+  steps:
+  - script: |
+      /tmp/docker exec -t -u 0 ci-container \
+      sh -c "apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confold" -y install sudo"
+    displayName: Set up sudo
+  - script: |
+      sudo apt-get install -y build-essential patchelf gcc g++ yasm libunwind8 wget
+    displayName: Set up patchelf, wget, compiler
+  - script: |
+      wget -nv -nc http://ffmpeg.org/releases/ffmpeg-$(FFMPEG_VERSION).tar.bz2 -O ffmpeg-$(FFMPEG_VERSION).tar.bz2
+      tar xjf ffmpeg-$(FFMPEG_VERSION).tar.bz2
+    displayName: Download FFmpeg
+  - script: |
+      # See https://github.com/FFmpeg/FFmpeg/blob/master/configure for an overview of all configuration
+      # options
+      ./configure --arch=x86_64 --disable-static --enable-shared --enable-version3
+      make
+    workingDirectory: ffmpeg-$(FFMPEG_VERSION)
+    displayName: Build FFmpeg
+  - script:
+      make DESTDIR=$(Build.ArtifactStagingDirectory)/linux-x64 install
+    workingDirectory: ffmpeg-$(FFMPEG_VERSION)
+    displayName: Install FFmpeg
+  - script: |
+      for f in $(Build.ArtifactStagingDirectory)/linux-x64/usr/local/lib/*.so.*; do
+        chmod +w $f
+
+        patchelf --set-rpath '${ORIGIN}' $f
+
+        readelf -d $f
+      done
   - task: PublishBuildArtifacts@1
     inputs:
       pathtoPublish: '$(Build.ArtifactStagingDirectory)'

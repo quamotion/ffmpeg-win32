@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Reflection;
 
@@ -24,7 +25,19 @@ namespace FFmpeg.Native
 
             // Alternatively, try the "runtimes" directory. This is the layout when this assembly
             // is loaded from a NuGet package (i.e. unit testing,...)
-            var nativeDirectory = Path.Combine(assemblyDirectory, "../../runtimes/win7-x64/native/");
+            var nativeDirectory = Path.Combine(assemblyDirectory, "../../runtimes");
+            
+            if (Environment.Is64BitProcess)
+            {
+                nativeDirectory = Path.Combine(nativeDirectory, "win7-x64");
+            }
+            else
+            {
+                nativeDirectory = Path.Combine(nativeDirectory, "win7-x86");
+            }
+            
+            nativeDirectory = Path.Combine(nativeDirectory, "native");
+            
             fullFileName = Path.Combine(nativeDirectory, fileName);
 
             if (File.Exists(fullFileName))
