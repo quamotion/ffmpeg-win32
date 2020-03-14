@@ -64,6 +64,9 @@ jobs:
 
 - job: ubuntu
   pool:
+    # This job builds for the linux-x64 RID. This includes hosts running CentOS 7. Because CentOS 7
+    # has an old version of glibc, we build on a relatively old version of Ubuntu, which also ships
+    # with an older version of glibc.
     vmImage: ubuntu-16.04
   container:
     image: ubuntu:16.04
@@ -106,7 +109,9 @@ jobs:
 
 - job: macos
   pool:
-    vmImage: 'macOS-10.15'
+    # Use 10.14 to avoid the following error:
+    # dyld: lazy symbol binding failed: Symbol not found: ____chkstk_darwin
+    vmImage: 'macOS-10.14'
   steps:
   - script: |
       brew install yasm
