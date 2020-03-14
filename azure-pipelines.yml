@@ -122,10 +122,13 @@ jobs:
       make
     workingDirectory: ffmpeg-$(FFMPEG_VERSION)
     displayName: Build FFmpeg
-  - script:
+  - script: |
       make DESTDIR=$(Build.ArtifactStagingDirectory)/osx-x64 install
     workingDirectory: ffmpeg-$(FFMPEG_VERSION)
     displayName: Install FFmpeg
+  - script: |
+      cp /usr/local/opt/xz/lib/liblzma.5.dylib $(Build.ArtifactStagingDirectory)/osx-x64/usr/local/lib
+    displayName: Copy additional libraries
   - script: |
       out="$(Build.ArtifactStagingDirectory)/osx-x64/usr/local/lib"
 
@@ -134,7 +137,7 @@ jobs:
         chmod +w "$f"
 
         # Skip the first two lines of the otool output, this is just the name of the dylib itself
-        dylibs=`otool -L "$f" | tail -n +3 | grep "/usr/local/lib/" | awk -F' ' '{ print $1 }'`
+        dylibs=`otool -L "$f" | tail -n +3 | grep "/usr/local/" | awk -F' ' '{ print $1 }'`
 
         for dylib in $dylibs; do
           basename=`basename "$dylib"`
