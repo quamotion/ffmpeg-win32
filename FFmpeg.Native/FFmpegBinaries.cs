@@ -11,8 +11,11 @@ namespace FFmpeg.Native
         {
             versions = new Dictionary<string, int>();
             versions.Add("avcodec", 57);
+            versions.Add("avdevice", 57);
+            versions.Add("avfilter", 6);
             versions.Add("avformat", 57);
             versions.Add("avutil", 55);
+            versions.Add("swresample", 2);
             versions.Add("swscale", 4);
         }
 
