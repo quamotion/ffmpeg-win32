@@ -1,5 +1,5 @@
 variables:
-  FFMPEG_VERSION: "3.3.4"
+  FFMPEG_VERSION: "4.2.2"
 
 jobs:
 - job: windows_cross
@@ -38,7 +38,7 @@ jobs:
   - script: |
       # See https://github.com/FFmpeg/FFmpeg/blob/master/configure for an overview of all configuration
       # options
-      ./configure --arch=$(arch) --target-os=$(targetOs) --cross-prefix=$(crossPrefix)- --disable-static --enable-shared --enable-version3 --enable-cuda --enable-cuvid --enable-dxva2
+      ./configure --arch=$(arch) --target-os=$(targetOs) --cross-prefix=$(crossPrefix)- --disable-static --enable-shared --enable-version3 --enable-dxva2
       make
     workingDirectory: ffmpeg-$(FFMPEG_VERSION)
     displayName: Build FFmpeg

@@ -10,13 +10,13 @@ namespace FFmpeg.Native
         static FFmpegBinaries()
         {
             versions = new Dictionary<string, int>();
-            versions.Add("avcodec", 57);
-            versions.Add("avdevice", 57);
-            versions.Add("avfilter", 6);
-            versions.Add("avformat", 57);
-            versions.Add("avutil", 55);
-            versions.Add("swresample", 2);
-            versions.Add("swscale", 4);
+            versions.Add("avcodec", 58);
+            versions.Add("avdevice", 58);
+            versions.Add("avfilter", 7);
+            versions.Add("avformat", 58);
+            versions.Add("avutil", 56);
+            versions.Add("swresample", 3);
+            versions.Add("swscale", 5);
         }
 
         public static string FindFFmpegLibrary(string name)
