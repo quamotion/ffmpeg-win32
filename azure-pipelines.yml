@@ -29,8 +29,14 @@ jobs:
       sh -c "apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confold" -y install sudo"
     displayName: Set up sudo
   - script: |
-      sudo apt-get install -y build-essential gcc-mingw-$(package) g++-mingw-$(package) yasm libunwind8 wget
+      sudo apt-get install -y build-essential gcc-mingw-$(package) g++-mingw-$(package) yasm libunwind8 wget git pkg-config
     displayName: Install cross-compiler
+  - script: |
+      git clone https://git.videolan.org/git/ffmpeg/nv-codec-headers.git
+      cd nv-codec-headers
+      make
+      sudo make install
+    displayName: Install ffnvcodec
   - script: |
       wget -nv -nc http://ffmpeg.org/releases/ffmpeg-$(FFMPEG_VERSION).tar.bz2 -O ffmpeg-$(FFMPEG_VERSION).tar.bz2
       tar xjf ffmpeg-$(FFMPEG_VERSION).tar.bz2
@@ -38,7 +44,7 @@ jobs:
   - script: |
       # See https://github.com/FFmpeg/FFmpeg/blob/master/configure for an overview of all configuration
       # options
-      ./configure --arch=$(arch) --target-os=$(targetOs) --cross-prefix=$(crossPrefix)- --disable-static --enable-shared --enable-version3 --enable-dxva2
+      ./configure --pkg-config=pkg-config --arch=$(arch) --target-os=$(targetOs) --cross-prefix=$(crossPrefix)- --disable-static --enable-shared --enable-version3 --enable-cuda --enable-cuvid --enable-dxva2
       make
     workingDirectory: ffmpeg-$(FFMPEG_VERSION)
     displayName: Build FFmpeg
