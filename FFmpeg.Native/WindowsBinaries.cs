@@ -1,10 +1,21 @@
 using System;
+using System.IO.Abstractions;
 
 namespace FFmpeg.Native
 {
-    public static class WindowsBinaries
+    public class WindowsBinaries : Binaries
     {
-        public static string FindFFmpegLibrary(string name, int version)
+        public WindowsBinaries()
+            : base()
+        {
+        }
+
+        public WindowsBinaries(IFileSystem fileSystem)
+            : base(fileSystem)
+        {
+        }
+
+        public override string FindFFmpegLibrary(string name, int version)
         {
             var runtime = "win7-x86";
             if (Environment.Is64BitProcess)
@@ -14,13 +25,13 @@ namespace FFmpeg.Native
 
             var paths = new string[]
             {
-                $"../../runtimes/{runtime}/native/",
-                $"./runtimes/{runtime}/native/",
-                "./",
+                this.FileSystem.Path.Combine("..","..","runtimes",$"{runtime}","native"),
+                this.FileSystem.Path.Combine(".","runtimes",$"{runtime}","native"),
+                ".",
             };
 
             var fileName = $"{name}-{version}.dll";
-            return Binaries.FindLibrary(fileName, paths);
+            return this.FindLibrary(fileName, paths);
         }
     }
 }

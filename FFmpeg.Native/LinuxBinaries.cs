@@ -1,18 +1,30 @@
+using System.IO.Abstractions;
+
 namespace FFmpeg.Native
 {
-    public static class LinuxBinaries
+    public class LinuxBinaries: Binaries
     {
-        public static string FindFFmpegLibrary(string name, int version)
+        public LinuxBinaries()
+            : base()
+        {
+        }
+
+        public LinuxBinaries(IFileSystem fileSystem)
+            : base(fileSystem)
+        {
+        }
+
+        public override string FindFFmpegLibrary(string name, int version)
         {
             var paths = new string[]
             {
-                "../../runtimes/linux-x64/native/",
-                "./runtimes/linux-x64/native/",
-                "./",
+                this.FileSystem.Path.Combine("..","..","runtimes","linux-x64","native"),
+                this.FileSystem.Path.Combine(".","runtimes","linux-x64","native"),
+                ".",
             };
 
             var fileName = $"lib{name}.so.{version}";
-            return Binaries.FindLibrary(fileName, paths);
+            return this.FindLibrary(fileName, paths);
         }
     }
 }

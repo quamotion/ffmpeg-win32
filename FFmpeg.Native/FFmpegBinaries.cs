@@ -27,22 +27,25 @@ namespace FFmpeg.Native
 
         public static string FindFFmpegLibrary(string name, int version)
         {
+            Binaries binaries = null;
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                return WindowsBinaries.FindFFmpegLibrary(name, version);
+                binaries = new WindowsBinaries();
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                return MacOSBinaries.FindFFmpegLibrary(name, version);
+                binaries = new MacOSBinaries();
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                return LinuxBinaries.FindFFmpegLibrary(name, version);
+                binaries = new LinuxBinaries();
             }
             else
             {
                 return null;
             }
+
+            return binaries.FindFFmpegLibrary(name, version);
         }
     }
 }

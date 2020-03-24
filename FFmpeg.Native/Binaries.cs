@@ -1,23 +1,35 @@
-using System.IO;
+using System.IO.Abstractions;
 using System.Reflection;
 
 namespace FFmpeg.Native
 {
-    public static class Binaries
+    public abstract class Binaries
     {
-        public static string FindLibrary(string fileName, string[] relativePaths)
+        public Binaries()
+            : this(new FileSystem())
         {
-            var assembly = typeof(MacOSBinaries).GetTypeInfo().Assembly;
+        }
+
+        public Binaries(IFileSystem fileSystem)
+        {
+            this.FileSystem = fileSystem;
+        }
+
+        internal IFileSystem FileSystem { get; set; }
+
+        public abstract string FindFFmpegLibrary(string name, int version);
+
+        internal string FindLibrary(string fileName, string[] relativePaths)
+        {
+            var assembly = typeof(Binaries).GetTypeInfo().Assembly;
             var assemblyLocation = assembly.Location;
-            var assemblyDirectory = Path.GetDirectoryName(assemblyLocation);
+            var assemblyDirectory = this.FileSystem.Path.GetDirectoryName(assemblyLocation);
 
             foreach (var relativePath in relativePaths)
             {
-                // Look for the library in the same location as this assembly. This will be the production
-                // layout (i.e. the result of dotnet build, dotnet pack,...)
-                var fullFileName = Path.Combine(assemblyDirectory, relativePath, fileName);
+                var fullFileName = this.FileSystem.Path.Combine(assemblyDirectory, relativePath, fileName);
 
-                if (File.Exists(fullFileName))
+                if (this.FileSystem.File.Exists(fullFileName))
                 {
                     return fullFileName;
                 }
