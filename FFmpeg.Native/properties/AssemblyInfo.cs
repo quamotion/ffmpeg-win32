@@ -16,7 +16,7 @@ using System.Runtime.InteropServices;
 [assembly: CLSCompliant(true)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("35b0ca1f-20ff-4a6e-95f0-7f3030653212")]
+[assembly: Guid("99ad444b-96e8-474e-815c-7974bec17ee2")]
 
 // Make the internal classes visible to the Test assembly
 [assembly: InternalsVisibleTo("FFmpeg.Native.Test")]
