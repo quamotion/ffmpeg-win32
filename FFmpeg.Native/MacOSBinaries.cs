@@ -1,39 +1,30 @@
-using System.IO;
-using System.Reflection;
+using System.IO.Abstractions;
 
 namespace FFmpeg.Native
 {
-    public static class MacOSBinaries
+    public class MacOSBinaries: Binaries
     {
-        public static string FindFFmpegLibrary(string name, int version)
+        public MacOSBinaries()
+            : base()
         {
-            var assembly = typeof(MacOSBinaries).GetTypeInfo().Assembly;
-            var assemblyLocation = assembly.Location;
-            var assemblyDirectory = Path.GetDirectoryName(assemblyLocation);
+        }
+
+        public MacOSBinaries(IFileSystem fileSystem)
+            : base(fileSystem)
+        {
+        }
+
+        public override string FindFFmpegLibrary(string name, int version)
+        {
+            var paths = new string[]
+            {
+                this.FileSystem.Path.Combine("..","..","runtimes","osx-x64","native"),
+                this.FileSystem.Path.Combine(".","runtimes","osx-x64","native"),
+                ".",
+            };
 
             var fileName = $"lib{name}.{version}.dylib";
-
-            // Look for the library in the same location as this assembly. This will be the production
-            // layout (i.e. the result of dotnet build, dotnet pack,...)
-            var fullFileName = Path.Combine(assemblyDirectory, fileName);
-
-            if (File.Exists(fullFileName))
-            {
-                return fullFileName;
-            }
-
-            // Alternatively, try the "runtimes" directory. This is the layout when this assembly
-            // is loaded from a NuGet package (i.e. unit testing,...)
-            var nativeDirectory = Path.Combine(assemblyDirectory, "../../runtimes/osx-x64/native/");
-            fullFileName = Path.Combine(nativeDirectory, fileName);
-
-            if (File.Exists(fullFileName))
-            {
-                return fullFileName;
-            }
-
-            // Couldn't find the library.
-            return null;
+            return this.FindLibrary(fileName, paths);
         }
     }
 }

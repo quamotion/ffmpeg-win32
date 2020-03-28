@@ -48,4 +48,8 @@
       <Pack>true</Pack>
     </Content>
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.IO.Abstractions" Version="10.0.1" />
+  </ItemGroup>
 </Project>
