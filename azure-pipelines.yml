@@ -29,7 +29,7 @@ jobs:
       sh -c "apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confold" -y install sudo"
     displayName: Set up sudo
   - script: |
-      sudo apt-get install -y build-essential gcc-mingw-$(package) g++-mingw-$(package) yasm libunwind8 wget git pkg-config
+      sudo apt-get install -y build-essential gcc-mingw-$(package) g++-mingw-$(package) yasm libunwind8 wget git pkg-config autoconf libtool-bin
     displayName: Install cross-compiler
   - script: |
       git clone https://git.videolan.org/git/ffmpeg/nv-codec-headers.git
@@ -38,12 +38,28 @@ jobs:
       sudo make install
     displayName: Install ffnvcodec
   - script: |
+      git clone https://github.com/lu-zero/mfx_dispatch
+      cd mfx_dispatch
+      autoreconf -fiv
+      automake --add-missing
+      ./configure \
+        --host=$(crossPrefix) \
+        --enable-shared \
+        --disable-static \
+        --prefix=$(Build.ArtifactStagingDirectory)/$(rid)/usr/local/
+      make
+      make install
+    displayName: Install libmfx
+  - script: |
       wget -nv -nc http://ffmpeg.org/releases/ffmpeg-$(FFMPEG_VERSION).tar.bz2 -O ffmpeg-$(FFMPEG_VERSION).tar.bz2
       tar xjf ffmpeg-$(FFMPEG_VERSION).tar.bz2
     displayName: Download FFmpeg
   - script: |
       # See https://github.com/FFmpeg/FFmpeg/blob/master/configure for an overview of all configuration
       # options
+      PKG_CONFIG_CROSS=$(Build.ArtifactStagingDirectory)/$(rid)/usr/local/lib/pkgconfig
+      export PKG_CONFIG_PATH=${PKG_CONFIG_CROSS}:${PKG_CONFIG_PATH}
+
       ./configure \
        --pkg-config=pkg-config \
        --arch=$(arch) \
@@ -56,7 +72,8 @@ jobs:
        --enable-cuvid \
        --enable-nvenc \
        --enable-nvdec \
-       --enable-dxva2
+       --enable-dxva2 \
+       --enable-libmfx
       make
     workingDirectory: ffmpeg-$(FFMPEG_VERSION)
     displayName: Build FFmpeg
@@ -70,6 +87,20 @@ jobs:
       if [ -f "$libgcc" ]; then
         echo "$libgcc exist"
         cp $libgcc $(Build.ArtifactStagingDirectory)/$(rid)/usr/local/bin/
+      fi
+
+      libstdc="/usr/lib/gcc/$(crossPrefix)/7.3-posix/libstdc++-6.dll"
+
+      if [ -f "$libstdc" ]; then
+        echo "$libstdc exist"
+        cp $libstdc $(Build.ArtifactStagingDirectory)/$(rid)/usr/local/bin/
+      fi
+
+      libgcc_s_seh="/usr/lib/gcc/$(crossPrefix)/7.3-posix/libgcc_s_seh-1.dll"
+
+      if [ -f "$libgcc_s_seh" ]; then
+        echo "$libgcc_s_seh exist"
+        cp $libgcc_s_seh $(Build.ArtifactStagingDirectory)/$(rid)/usr/local/bin/
       fi
 
       cp /usr/$(crossPrefix)/lib/libwinpthread-1.dll $(Build.ArtifactStagingDirectory)/$(rid)/usr/local/bin/
