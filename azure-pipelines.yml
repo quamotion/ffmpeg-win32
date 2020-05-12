@@ -44,7 +44,19 @@ jobs:
   - script: |
       # See https://github.com/FFmpeg/FFmpeg/blob/master/configure for an overview of all configuration
       # options
-      ./configure --pkg-config=pkg-config --arch=$(arch) --target-os=$(targetOs) --cross-prefix=$(crossPrefix)- --disable-static --enable-shared --enable-version3 --enable-cuda --enable-cuvid --enable-dxva2
+      ./configure \
+       --pkg-config=pkg-config \
+       --arch=$(arch) \
+       --target-os=$(targetOs) \
+       --cross-prefix=$(crossPrefix)- \
+       --disable-static \
+       --enable-shared \
+       --enable-version3 \
+       --enable-cuda \
+       --enable-cuvid \
+       --enable-nvenc \
+       --enable-nvdec \
+       --enable-dxva2
       make
     workingDirectory: ffmpeg-$(FFMPEG_VERSION)
     displayName: Build FFmpeg
