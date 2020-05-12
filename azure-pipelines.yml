@@ -56,7 +56,8 @@ jobs:
        --enable-cuvid \
        --enable-nvenc \
        --enable-nvdec \
-       --enable-dxva2
+       --enable-dxva2 \
+       --enable-nonfree 
       make
     workingDirectory: ffmpeg-$(FFMPEG_VERSION)
     displayName: Build FFmpeg
