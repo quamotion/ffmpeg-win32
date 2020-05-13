@@ -12,12 +12,28 @@ jobs:
         crossPrefix: i686-w64-mingw32
         rid: win7-x86
         package: w64-i686
+        configuration: full
       x64:
         arch: x86_64
         targetOs: mingw32
         crossPrefix: x86_64-w64-mingw32
         rid: win7-x64
         package: w64-x86-64
+        configuration: full
+      x86_h264:
+        arch: x86
+        targetOs: mingw32
+        crossPrefix: i686-w64-mingw32
+        rid: win7-x86
+        package: w64-i686
+        configuration: h264
+      x64_h264:
+        arch: x86_64
+        targetOs: mingw32
+        crossPrefix: x86_64-w64-mingw32
+        rid: win7-x64
+        package: w64-x86-64
+        configuration: h264
   pool:
     vmImage: ubuntu-16.04
   container:
@@ -46,7 +62,7 @@ jobs:
         --host=$(crossPrefix) \
         --enable-shared \
         --disable-static \
-        --prefix=$(Build.ArtifactStagingDirectory)/$(rid)/usr/local/
+        --prefix=$(Build.ArtifactStagingDirectory)/$(configuration)/$(rid)/usr/local/
       make
       make install
     displayName: Install libmfx
@@ -57,7 +73,92 @@ jobs:
   - script: |
       # See https://github.com/FFmpeg/FFmpeg/blob/master/configure for an overview of all configuration
       # options
-      PKG_CONFIG_CROSS=$(Build.ArtifactStagingDirectory)/$(rid)/usr/local/lib/pkgconfig
+      PKG_CONFIG_CROSS=$(Build.ArtifactStagingDirectory)/$(configuration)/$(rid)/usr/local/lib/pkgconfig
+      export PKG_CONFIG_PATH=${PKG_CONFIG_CROSS}:${PKG_CONFIG_PATH}
+
+      ./configure \
+       --pkg-config=pkg-config \
+       --arch=$(arch) \
+       --target-os=$(targetOs) \
+       --cross-prefix=$(crossPrefix)- \
+       --disable-static \
+       --disable-doc \
+       --enable-shared \
+       --enable-version3 \
+       --enable-cuda \
+       --enable-cuvid \
+       --enable-nvenc \
+       --enable-nvdec \
+       --enable-dxva2 \
+       --enable-libmfx
+    workingDirectory: ffmpeg-$(FFMPEG_VERSION)
+    displayName: Configure FFmpeg (full)
+    condition: and(succeeded(), eq(variables['configuration'], 'full'))
+# flags_generic="--disable-static --enable-shared"
+# flags_minimal="--disable-programs --disable-doc --disable-avdevice --disable-swresample --disable-postproc --disable-avfilter --disable-postproc --disable-avfilter --disable-network --disable-everything"
+# flags_mpeg="--enable-encoder=mpeg1video --enable-decoder=mpeg1_vdpau --enable-decoder=mpeg1video"
+# flags_h264="--enable-decoder=h264 --enable-parser=h264 --enable-demuxer=h264"
+# flags_h265="--enable-encoder=libkvazaar --enable-libkvazaar"
+
+
+# if [ "x$CUVID" = "xyes" ]
+# then
+# 	echo "Building FFmpeg with cuvid/dxva2/cuda support"
+# 	flags_generic="$flags_generic --enable-cuvid --enable-dxva2 --enable-cuda"
+# 	flags_mpeg="$flags_mpeg --enable-decoder=mpeg1_cuvid"
+# 	flags_h264="$flags_h264 --enable-decoder=h264_cuvid --enable-hwaccel=h264_cuvid --enable-hwaccel=h264_dxva2"
+# else
+# 	echo "Building FFmpeg without cuvid/dxva support"
+# fi
+
+# flags="$flags_cross $flags_generic $flags_minimal $flags_mpeg $flags_h264 $flags_h265 --enable-protocol=file"
+# LIBS="-lpthread" ./configure $flags
+# make
+# cd ..
+  - script: |
+      # See https://github.com/FFmpeg/FFmpeg/blob/master/configure for an overview of all configuration
+      # options
+      PKG_CONFIG_CROSS=$(Build.ArtifactStagingDirectory)/$(configuration)/$(rid)/usr/local/lib/pkgconfig
+      export PKG_CONFIG_PATH=${PKG_CONFIG_CROSS}:${PKG_CONFIG_PATH}
+
+      ./configure \
+       --pkg-config=pkg-config \
+       --arch=$(arch) \
+       --target-os=$(targetOs) \
+       --cross-prefix=$(crossPrefix)- \
+       --disable-static \
+       --disable-doc \
+       --enable-shared \
+       --enable-version3 \
+       --disable-avdevice \
+       --disable-avfilter \
+       --disable-swresample \
+       --disable-swscale \
+       --disable-postproc \
+       --disable-avfilter \
+       --disable-network \
+       --disable-everything \
+       --enable-decoder=h264 \
+       --enable-decoder=h264_qsv \
+       --enable-decoder=h264_cuvid \
+       --enable-hwaccel=h264_cuvid \
+       --enable-hwaccel=h264_dxva2 \
+       --enable-hwaccel=h264_qsv \
+       --enable-parser=h264 \
+       --enable-demuxer=h264 \
+       --enable-cuda \
+       --enable-cuvid \
+       --enable-nvenc \
+       --enable-nvdec \
+       --enable-dxva2 \
+       --enable-libmfx
+    workingDirectory: ffmpeg-$(FFMPEG_VERSION)
+    displayName: Configure FFmpeg (h264 only)
+    condition: and(succeeded(), eq(variables['configuration'], 'h264'))
+  - script: |
+      # See https://github.com/FFmpeg/FFmpeg/blob/master/configure for an overview of all configuration
+      # options
+      PKG_CONFIG_CROSS=$(Build.ArtifactStagingDirectory)/$(configuration)/$(rid)/usr/local/lib/pkgconfig
       export PKG_CONFIG_PATH=${PKG_CONFIG_CROSS}:${PKG_CONFIG_PATH}
 
       ./configure \
@@ -74,11 +175,12 @@ jobs:
        --enable-nvdec \
        --enable-dxva2 \
        --enable-libmfx
-      make
     workingDirectory: ffmpeg-$(FFMPEG_VERSION)
-    displayName: Build FFmpeg
+    displayName: Configure FFmpeg (full)
+    condition: and(succeeded(), eq(variables['configuration'], 'full'))
   - script: |
-      make DESTDIR=$(Build.ArtifactStagingDirectory)/$(rid) install
+      make
+      make DESTDIR=$(Build.ArtifactStagingDirectory)/$(configuration)/$(rid) install
     workingDirectory: ffmpeg-$(FFMPEG_VERSION)
     displayName: Install FFmpeg
   - script: |
@@ -86,24 +188,24 @@ jobs:
 
       if [ -f "$libgcc" ]; then
         echo "$libgcc exist"
-        cp $libgcc $(Build.ArtifactStagingDirectory)/$(rid)/usr/local/bin/
+        cp $libgcc $(Build.ArtifactStagingDirectory)/$(configuration)/$(rid)/usr/local/bin/
       fi
 
       libstdc="/usr/lib/gcc/$(crossPrefix)/7.3-posix/libstdc++-6.dll"
 
       if [ -f "$libstdc" ]; then
         echo "$libstdc exist"
-        cp $libstdc $(Build.ArtifactStagingDirectory)/$(rid)/usr/local/bin/
+        cp $libstdc $(Build.ArtifactStagingDirectory)/$(configuration)/$(rid)/usr/local/bin/
       fi
 
       libgcc_s_seh="/usr/lib/gcc/$(crossPrefix)/7.3-posix/libgcc_s_seh-1.dll"
 
       if [ -f "$libgcc_s_seh" ]; then
         echo "$libgcc_s_seh exist"
-        cp $libgcc_s_seh $(Build.ArtifactStagingDirectory)/$(rid)/usr/local/bin/
+        cp $libgcc_s_seh $(Build.ArtifactStagingDirectory)/$(configuration)/$(rid)/usr/local/bin/
       fi
 
-      cp /usr/$(crossPrefix)/lib/libwinpthread-1.dll $(Build.ArtifactStagingDirectory)/$(rid)/usr/local/bin/
+      cp /usr/$(crossPrefix)/lib/libwinpthread-1.dll $(Build.ArtifactStagingDirectory)/$(configuration)/$(rid)/usr/local/bin/
       
     displayName: Copy additional libraries
   - task: PublishBuildArtifacts@1

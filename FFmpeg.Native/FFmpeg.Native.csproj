@@ -21,20 +21,20 @@
 
   <ItemGroup>
     <Content Include="$(FFmpegWin64Dir)/bin/*.dll">
-      <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
+      <PackagePath>runtimes/win7-x64/full/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
     <Content Include="$(FFmpegWin64Dir)/bin/*.exe">
-      <PackagePath>runtimes/win7-x64/native/%(Filename)%(Extension)</PackagePath>
+      <PackagePath>runtimes/win7-x64/full/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
 
     <Content Include="$(FFmpegWin32Dir)/bin/*.dll">
-      <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
+      <PackagePath>runtimes/win7-x86/full/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
     <Content Include="$(FFmpegWin32Dir)/bin/*.exe">
-      <PackagePath>runtimes/win7-x86/native/%(Filename)%(Extension)</PackagePath>
+      <PackagePath>runtimes/win7-x86/full/native/%(Filename)%(Extension)</PackagePath>
       <Pack>true</Pack>
     </Content>
 
