@@ -78,7 +78,7 @@ namespace FFmpeg.Native.Test
         }
 
         [Fact]
-        public void FindlinuxBinaries1()
+        public void FindLinuxBinaries1()
         {
             var fileSytem = new MockFileSystem(new Dictionary<string, MockFileData>
             {
