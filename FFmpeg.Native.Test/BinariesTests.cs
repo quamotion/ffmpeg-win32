@@ -21,7 +21,7 @@ namespace FFmpeg.Native.Test
         [Fact]
         public void FindWindowsBinaries1()
         {
-            var fileSytem = new MockFileSystem(new Dictionary<string, MockFileData>
+            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
             {
                 { Path.Combine(assemblyDirectory,"..","..","runtimes","win7-x86","native","avutil-56.dll"), new MockFileData("avutil-56.dll") },
                 { Path.Combine(assemblyDirectory,"..","..","runtimes","win7-x64","native","avutil-56.dll"), new MockFileData("avutil-56.dll") },
@@ -35,7 +35,7 @@ namespace FFmpeg.Native.Test
                 runtime = "win7-x64";
             }
 
-            var windowsBinaries = new WindowsBinaries(fileSytem);
+            var windowsBinaries = new WindowsBinaries(fileSystem);
 
             Assert.Equal(Path.GetFullPath(Path.Combine(assemblyDirectory, "..", "..", "runtimes", runtime, "native", "avutil-56.dll")), Path.GetFullPath(windowsBinaries.FindFFmpegLibrary("avutil", 56)));
         }
@@ -43,7 +43,7 @@ namespace FFmpeg.Native.Test
         [Fact]
         public void FindWindowsBinaries2()
         {
-            var fileSytem = new MockFileSystem(new Dictionary<string, MockFileData>
+            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
             {
                 { Path.Combine(assemblyDirectory,"runtimes","win7-x86","native","avutil-56.dll"), new MockFileData("avutil-56.dll") },
                 { Path.Combine(assemblyDirectory,"runtimes","win7-x64","native","avutil-56.dll"), new MockFileData("avutil-56.dll") },
@@ -57,7 +57,7 @@ namespace FFmpeg.Native.Test
                 runtime = "win7-x64";
             }
 
-            var windowsBinaries = new WindowsBinaries(fileSytem);
+            var windowsBinaries = new WindowsBinaries(fileSystem);
 
             Assert.Equal(Path.GetFullPath(Path.Combine(assemblyDirectory, "runtimes", runtime, "native", "avutil-56.dll")), Path.GetFullPath(windowsBinaries.FindFFmpegLibrary("avutil", 56)));
         }
@@ -65,14 +65,14 @@ namespace FFmpeg.Native.Test
         [Fact]
         public void FindWindowsBinaries3()
         {
-            var fileSytem = new MockFileSystem(new Dictionary<string, MockFileData>
+            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
             {
                 { Path.Combine(assemblyDirectory,"avutil-56.dll"), new MockFileData("avutil-56.dll") },
                 { Path.Combine(assemblyDirectory,"libavutil.so.56"), new MockFileData("libavutil.so.56") },
                 { Path.Combine(assemblyDirectory,"libavutil.56.dylib"), new MockFileData("libavutil.56.dylib") }
             });
 
-            var windowsBinaries = new WindowsBinaries(fileSytem);
+            var windowsBinaries = new WindowsBinaries(fileSystem);
 
             Assert.Equal(Path.GetFullPath(Path.Combine(assemblyDirectory, "avutil-56.dll")), Path.GetFullPath(windowsBinaries.FindFFmpegLibrary("avutil", 56)));
         }
@@ -80,7 +80,7 @@ namespace FFmpeg.Native.Test
         [Fact]
         public void FindLinuxBinaries1()
         {
-            var fileSytem = new MockFileSystem(new Dictionary<string, MockFileData>
+            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
             {
                 { Path.Combine(assemblyDirectory,"..","..","runtimes","win7-x86","native","avutil-56.dll"), new MockFileData("avutil-56.dll") },
                 { Path.Combine(assemblyDirectory,"..","..","runtimes","win7-x64","native","avutil-56.dll"), new MockFileData("avutil-56.dll") },
@@ -88,7 +88,7 @@ namespace FFmpeg.Native.Test
                 { Path.Combine(assemblyDirectory,"..","..","runtimes","osx-x64","native","libavutil.56.dylib"), new MockFileData("libavutil.56.dylib") }
             });
 
-            var linuxBinaries = new LinuxBinaries(fileSytem);
+            var linuxBinaries = new LinuxBinaries(fileSystem);
 
             Assert.Equal(Path.GetFullPath(Path.Combine("..", "..", "runtimes", "linux-x64", "native", "libavutil.so.56")), Path.GetFullPath(linuxBinaries.FindFFmpegLibrary("avutil", 56)));
         }
@@ -96,7 +96,7 @@ namespace FFmpeg.Native.Test
         [Fact]
         public void FindLinuxBinaries2()
         {
-            var fileSytem = new MockFileSystem(new Dictionary<string, MockFileData>
+            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
             {
                 { Path.Combine(assemblyDirectory,"runtimes","win7-x86","native","avutil-56.dll"), new MockFileData("avutil-56.dll") },
                 { Path.Combine(assemblyDirectory,"runtimes","win7-x64","native","avutil-56.dll"), new MockFileData("avutil-56.dll") },
@@ -104,7 +104,7 @@ namespace FFmpeg.Native.Test
                 { Path.Combine(assemblyDirectory,"runtimes","osx-x64","native","libavutil.56.dylib"), new MockFileData("libavutil.56.dylib") }
             });
 
-            var linuxBinaries = new LinuxBinaries(fileSytem);
+            var linuxBinaries = new LinuxBinaries(fileSystem);
 
             Assert.Equal(Path.GetFullPath(Path.Combine(assemblyDirectory, "runtimes", "linux-x64", "native", "libavutil.so.56")), Path.GetFullPath(linuxBinaries.FindFFmpegLibrary("avutil", 56)));
         }
@@ -112,14 +112,14 @@ namespace FFmpeg.Native.Test
         [Fact]
         public void FindLinuxBinaries3()
         {
-            var fileSytem = new MockFileSystem(new Dictionary<string, MockFileData>
+            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
             {
                 { Path.Combine(assemblyDirectory,"avutil-56.dll"), new MockFileData("avutil-56.dll") },
                 { Path.Combine(assemblyDirectory,"libavutil.so.56"), new MockFileData("libavutil.so.56") },
                 { Path.Combine(assemblyDirectory,"libavutil.56.dylib"), new MockFileData("libavutil.56.dylib") }
             });
 
-            var linuxBinaries = new LinuxBinaries(fileSytem);
+            var linuxBinaries = new LinuxBinaries(fileSystem);
 
             Assert.Equal(Path.GetFullPath(Path.Combine(assemblyDirectory, "libavutil.so.56")), Path.GetFullPath(linuxBinaries.FindFFmpegLibrary("avutil", 56)));
         }
@@ -127,7 +127,7 @@ namespace FFmpeg.Native.Test
         [Fact]
         public void FindMacOSBinaries1()
         {
-            var fileSytem = new MockFileSystem(new Dictionary<string, MockFileData>
+            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
             {
                 { Path.Combine(assemblyDirectory,"..","..","runtimes","win7-x86","native","avutil-56.dll"), new MockFileData("avutil-56.dll") },
                 { Path.Combine(assemblyDirectory,"..","..","runtimes","win7-x64","native","avutil-56.dll"), new MockFileData("avutil-56.dll") },
@@ -135,7 +135,7 @@ namespace FFmpeg.Native.Test
                 { Path.Combine(assemblyDirectory,"..","..","runtimes","osx-x64","native","libavutil.56.dylib"), new MockFileData("libavutil.56.dylib") }
             });
 
-            var macOSBinaries = new MacOSBinaries(fileSytem);
+            var macOSBinaries = new MacOSBinaries(fileSystem);
 
             Assert.Equal(Path.GetFullPath(Path.Combine("..", "..", "runtimes", "osx-x64", "native", "libavutil.56.dylib")), Path.GetFullPath(macOSBinaries.FindFFmpegLibrary("avutil", 56)));
         }
@@ -143,7 +143,7 @@ namespace FFmpeg.Native.Test
         [Fact]
         public void FindMMacOSBinaries2()
         {
-            var fileSytem = new MockFileSystem(new Dictionary<string, MockFileData>
+            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
             {
                 { Path.Combine(assemblyDirectory,"runtimes","win7-x86","native","avutil-56.dll"), new MockFileData("avutil-56.dll") },
                 { Path.Combine(assemblyDirectory,"runtimes","win7-x64","native","avutil-56.dll"), new MockFileData("avutil-56.dll") },
@@ -151,7 +151,7 @@ namespace FFmpeg.Native.Test
                 { Path.Combine(assemblyDirectory,"runtimes","osx-x64","native","libavutil.56.dylib"), new MockFileData("libavutil.56.dylib") }
             });
 
-            var macOSBinaries = new MacOSBinaries(fileSytem);
+            var macOSBinaries = new MacOSBinaries(fileSystem);
 
             Assert.Equal(Path.GetFullPath(Path.Combine(assemblyDirectory, "runtimes", "osx-x64", "native", "libavutil.56.dylib")), Path.GetFullPath(macOSBinaries.FindFFmpegLibrary("avutil", 56)));
         }
@@ -159,14 +159,14 @@ namespace FFmpeg.Native.Test
         [Fact]
         public void FindMacOSBinaries3()
         {
-            var fileSytem = new MockFileSystem(new Dictionary<string, MockFileData>
+            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
             {
                 { Path.Combine(assemblyDirectory,"avutil-56.dll"), new MockFileData("avutil-56.dll") },
                 { Path.Combine(assemblyDirectory,"libavutil.so.56"), new MockFileData("libavutil.so.56") },
                 { Path.Combine(assemblyDirectory,"libavutil.56.dylib"), new MockFileData("libavutil.56.dylib") }
             });
 
-            var macOSBinaries = new MacOSBinaries(fileSytem);
+            var macOSBinaries = new MacOSBinaries(fileSystem);
 
             Assert.Equal(Path.GetFullPath(Path.Combine(assemblyDirectory, "libavutil.56.dylib")), Path.GetFullPath(macOSBinaries.FindFFmpegLibrary("avutil", 56)));
         }
