@@ -1,5 +1,6 @@
 variables:
   FFMPEG_VERSION: "4.3.1"
+  FFMPEG_PACKAGE_VERSION: "4.3.1.$(Build.BuildId)"
 
 jobs:
 - job: windows_cross
@@ -226,7 +227,6 @@ jobs:
 
       # Run dotnet pack with and without a version suffix
       mkdir -p $(Build.ArtifactStagingDirectory)/nuget
-      dotnet pack -o $(Build.ArtifactStagingDirectory)/nuget -c Release --version-suffix "ci-$(Build.BuildNumber)"
       dotnet pack -o $(Build.ArtifactStagingDirectory)/nuget -c Release
   - task: PublishBuildArtifacts@1
     inputs:
