@@ -5,7 +5,7 @@ jobs:
 - job: windows_cross
   strategy:
     maxParallel: 2
-    matrix: 
+    matrix:
       x86:
         arch: x86
         targetOs: mingw32
@@ -19,7 +19,7 @@ jobs:
         rid: win7-x64
         package: w64-x86-64
   pool:
-    vmImage: ubuntu-16.04
+    vmImage: ubuntu-20.04
   container:
     image: ubuntu:18.04
     options: "--name ci-container -v /usr/bin/docker:/tmp/docker:ro"
@@ -116,7 +116,7 @@ jobs:
     # This job builds for the linux-x64 RID. This includes hosts running CentOS 7. Because CentOS 7
     # has an old version of glibc, we build on a relatively old version of Ubuntu, which also ships
     # with an older version of glibc.
-    vmImage: ubuntu-16.04
+    vmImage: ubuntu-20.04
   container:
     image: ubuntu:16.04
     options: "--name ci-container -v /usr/bin/docker:/tmp/docker:ro"
@@ -216,7 +216,7 @@ jobs:
   - windows_cross
   - macos
   pool:
-    vmImage: ubuntu-16.04
+    vmImage: ubuntu-20.04
   steps:
   - task: DownloadBuildArtifacts@0
     inputs:
