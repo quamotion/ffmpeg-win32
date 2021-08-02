@@ -1,6 +1,6 @@
 variables:
-  FFMPEG_VERSION: "4.3.1"
-  FFMPEG_PACKAGE_VERSION: "4.3.1.$(Build.BuildId)"
+  FFMPEG_VERSION: "4.4"
+  FFMPEG_PACKAGE_VERSION: "4.4.0.$(Build.BuildId)"
 
 jobs:
 - job: windows_cross
