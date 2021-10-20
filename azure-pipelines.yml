@@ -125,7 +125,7 @@ jobs:
   - task: PublishBuildArtifacts@1
     inputs:
       pathtoPublish: '$(Build.ArtifactStagingDirectory)'
-      artifactName: ffmpeg
+      artifactName: ffmpeg-$(Build.BuildId)
 
 - job: ubuntu
   pool:
@@ -170,7 +170,7 @@ jobs:
   - task: PublishBuildArtifacts@1
     inputs:
       pathtoPublish: '$(Build.ArtifactStagingDirectory)'
-      artifactName: ffmpeg
+      artifactName: ffmpeg-$(Build.BuildId)
 
 - job: macos
   pool:
@@ -225,7 +225,7 @@ jobs:
   - task: PublishBuildArtifacts@1
     inputs:
       pathtoPublish: '$(Build.ArtifactStagingDirectory)'
-      artifactName: ffmpeg
+      artifactName: ffmpeg-$(Build.BuildId)
 
 - job: nuget
   dependsOn:
@@ -236,7 +236,7 @@ jobs:
   steps:
   - task: DownloadBuildArtifacts@0
     inputs:
-      artifactName: ffmpeg
+      artifactName: ffmpeg-$(Build.BuildId)
   - script: |
       cd FFmpeg.Native
 
