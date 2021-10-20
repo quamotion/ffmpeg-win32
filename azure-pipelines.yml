@@ -5,20 +5,33 @@ variables:
 jobs:
 - job: windows_cross
   strategy:
-    maxParallel: 2
+    maxParallel: "2"
     matrix:
-      x86:
+      x86_minimal:
         arch: x86
-        targetOs: mingw32
-        crossPrefix: i686-w64-mingw32
-        rid: win7-x86
-        package: w64-i686
-      x64:
+        minimal: true
+      x64_minimal:
         arch: x86_64
-        targetOs: mingw32
-        crossPrefix: x86_64-w64-mingw32
-        rid: win7-x64
-        package: w64-x86-64
+        minimal: true
+  variables:
+    - name: targetOs
+      value: mingw32
+    - name: crossPrefix
+      ${{ if eq(variables['arch'], 'x86') }}:
+        value: i686-w64-mingw32
+      ${{ else }}:
+        value: x86_64-w64-mingw32
+    - name: rid
+      ${{ if eq(variables['arch'], 'x86') }}:
+        value: win7-x86
+      ${{ else }}:
+        value: win7-x64
+    - name: package
+      ${{ if eq(variables['arch'], 'x86') }}:
+        value: w64-i686
+      ${{ else }}:
+        value: w64-x86-64
+
   pool:
     vmImage: ubuntu-20.04
   container:
@@ -38,6 +51,7 @@ jobs:
       make
       sudo make install
     displayName: Install ffnvcodec
+    condition: eq(variables.minimal, 'false')
   - script: |
       git clone https://github.com/lu-zero/mfx_dispatch
       cd mfx_dispatch
@@ -51,6 +65,7 @@ jobs:
       make
       make install
     displayName: Install libmfx
+    condition: eq(variables.minimal, 'false')
   - script: |
       wget -nv -nc http://ffmpeg.org/releases/ffmpeg-$(FFMPEG_VERSION).tar.bz2 -O ffmpeg-$(FFMPEG_VERSION).tar.bz2
       tar xjf ffmpeg-$(FFMPEG_VERSION).tar.bz2
