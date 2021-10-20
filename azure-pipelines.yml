@@ -176,7 +176,7 @@ jobs:
   - script: |
       # See https://github.com/FFmpeg/FFmpeg/blob/master/configure for an overview of all configuration
       # options
-      ./configure --arch=x86_64 --disable-static --enable-shared $(extra_flags)
+      ./configure --arch=x86_64 --disable-static --enable-shared --disable-v4l2-m2m $(extra_flags)
       make
     workingDirectory: ffmpeg-$(FFMPEG_VERSION)
     displayName: Build FFmpeg
@@ -213,7 +213,17 @@ jobs:
   - script: |
       # See https://github.com/FFmpeg/FFmpeg/blob/master/configure for an overview of all configuration
       # options
-      ./configure --arch=x86_64 --disable-static --enable-shared $(extra_flags)
+      ./configure --arch=x86_64 --disable-static --enable-shared $(extra_flags) \
+        --disable-appkit \
+        --disable-avfoundation \
+        --disable-bzlib \
+        --disable-coreimage \
+        --disable-iconv \
+        --disable-lzma \
+        --disable-securetransport \
+        --disable-zlib \
+        --disable-audiotoolbox \
+        --disable-videotoolbox
       make
     workingDirectory: ffmpeg-$(FFMPEG_VERSION)
     displayName: Build FFmpeg
@@ -221,9 +231,6 @@ jobs:
       make DESTDIR=$(Build.ArtifactStagingDirectory)/osx-x64 install
     workingDirectory: ffmpeg-$(FFMPEG_VERSION)
     displayName: Install FFmpeg
-  - script: |
-      cp /usr/local/opt/xz/lib/liblzma.5.dylib $(Build.ArtifactStagingDirectory)/osx-x64/usr/local/lib
-    displayName: Copy additional libraries
   - script: |
       out="$(Build.ArtifactStagingDirectory)/osx-x64/usr/local/lib"
 
