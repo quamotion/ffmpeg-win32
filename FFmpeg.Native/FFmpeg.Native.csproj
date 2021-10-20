@@ -2,10 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <FFmpegWin64Dir Condition="'$(FFmpegWin64Dir)' == ''">$(SYSTEM_ARTIFACTSDIRECTORY)/ffmpeg/win7-x64/usr/local/</FFmpegWin64Dir>
-    <FFmpegWin32Dir Condition="'$(FFmpegWin32Dir)' == ''">$(SYSTEM_ARTIFACTSDIRECTORY)/ffmpeg/win7-x86/usr/local/</FFmpegWin32Dir>
-    <FFmpegOSXDir Condition="'$(FFmpegOSXDir)' == ''">$(SYSTEM_ARTIFACTSDIRECTORY)/ffmpeg/osx-x64/usr/local/</FFmpegOSXDir>
-    <FFmpegLinuxDir Condition="'$(FFmpegLinuxDir)' == ''">$(SYSTEM_ARTIFACTSDIRECTORY)/ffmpeg/linux-x64/usr/local/</FFmpegLinuxDir>
+    <FFmpegWin64Dir Condition="'$(FFmpegWin64Dir)' == ''">$(SYSTEM_ARTIFACTSDIRECTORY)/ffmpeg-$(BUILD_BUILDID)/win7-x64/usr/local/</FFmpegWin64Dir>
+    <FFmpegWin32Dir Condition="'$(FFmpegWin32Dir)' == ''">$(SYSTEM_ARTIFACTSDIRECTORY)/ffmpeg-$(BUILD_BUILDID)/win7-x86/usr/local/</FFmpegWin32Dir>
+    <FFmpegOSXDir Condition="'$(FFmpegOSXDir)' == ''">$(SYSTEM_ARTIFACTSDIRECTORY)/ffmpeg-$(BUILD_BUILDID)/osx-x64/usr/local/</FFmpegOSXDir>
+    <FFmpegLinuxDir Condition="'$(FFmpegLinuxDir)' == ''">$(SYSTEM_ARTIFACTSDIRECTORY)/ffmpeg-$(BUILD_BUILDID)/linux-x64/usr/local/</FFmpegLinuxDir>
     <PackageIconUrl>https://ffmpeg.org/favicon.ico</PackageIconUrl>
     <Authors>FFmpeg Team</Authors>
     <Company></Company>

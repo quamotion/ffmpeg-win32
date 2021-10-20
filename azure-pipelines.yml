@@ -1,6 +1,37 @@
 variables:
-  FFMPEG_VERSION: "4.4"
-  FFMPEG_PACKAGE_VERSION: "4.4.0.$(Build.BuildId)"
+  - name: FFMPEG_VERSION
+    value: "4.4"
+  - name: FFMPEG_PACKAGE_VERSION
+    value: "4.4.0.$(Build.BuildId)"
+  - name: minimal
+    value: true
+  - name: extra_flags
+    ${{ if eq(variables['minimal'], 'false') }}:
+      value: >-
+        --enable-cuda
+        --enable-cuvid
+        --enable-nvenc
+        --enable-nvdec
+        --enable-dxva2
+        --enable-libmfx
+    ${{ else }}:
+      value: >-
+        --disable-programs
+        --disable-doc
+        --disable-avdevice
+        --disable-postproc
+        --disable-network
+        --disable-swresample
+        --disable-everything
+        --enable-decoder=h264
+        --enable-parser=h264
+        --enable-demuxer=h264
+        --enable-protocol=file
+  - name: PackageId
+    ${{ if eq(variables['minimal'], 'false') }}:
+      value: FFmpeg.Native
+    ${{ else }}:
+      value: FFmpeg.Native.H264
 
 jobs:
 - job: windows_cross
@@ -9,10 +40,8 @@ jobs:
     matrix:
       x86_minimal:
         arch: x86
-        minimal: true
       x64_minimal:
         arch: x86_64
-        minimal: true
   variables:
     - name: targetOs
       value: mingw32
@@ -39,28 +68,6 @@ jobs:
        --cross-prefix=$(crossPrefix)-
        --disable-static
        --enable-shared
-    - name: extra_flags
-      ${{ if eq(variables['minimal'], 'false') }}:
-        value: >-
-          --enable-cuda
-          --enable-cuvid
-          --enable-nvenc
-          --enable-nvdec
-          --enable-dxva2
-          --enable-libmfx
-      ${{ else }}:
-        value: >-
-          --disable-programs
-          --disable-doc
-          --disable-avdevice
-          --disable-postproc
-          --disable-network
-          --disable-swresample
-          --disable-everything
-          --enable-decoder=h264
-          --enable-parser=h264
-          --enable-demuxer=h264
-          --enable-protocol=file
 
   pool:
     vmImage: ubuntu-20.04
@@ -169,7 +176,7 @@ jobs:
   - script: |
       # See https://github.com/FFmpeg/FFmpeg/blob/master/configure for an overview of all configuration
       # options
-      ./configure --arch=x86_64 --disable-static --enable-shared --enable-version3
+      ./configure --arch=x86_64 --disable-static --enable-shared $(extra_flags)
       make
     workingDirectory: ffmpeg-$(FFMPEG_VERSION)
     displayName: Build FFmpeg
@@ -206,7 +213,7 @@ jobs:
   - script: |
       # See https://github.com/FFmpeg/FFmpeg/blob/master/configure for an overview of all configuration
       # options
-      ./configure --arch=x86_64 --disable-static --enable-shared --enable-version3
+      ./configure --arch=x86_64 --disable-static --enable-shared $(extra_flags)
       make
     workingDirectory: ffmpeg-$(FFMPEG_VERSION)
     displayName: Build FFmpeg
@@ -260,7 +267,7 @@ jobs:
 
       # Run dotnet pack with and without a version suffix
       mkdir -p $(Build.ArtifactStagingDirectory)/nuget
-      dotnet pack -o $(Build.ArtifactStagingDirectory)/nuget -c Release
+      dotnet pack -o $(Build.ArtifactStagingDirectory)/nuget -c Release -p:PackageID=$(PackageId)
   - task: PublishBuildArtifacts@1
     inputs:
       pathtoPublish: '$(Build.ArtifactStagingDirectory)/nuget'
